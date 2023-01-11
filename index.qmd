@@ -255,7 +255,7 @@ Your code has been rated at -10.00/10
 
 ```
 :::
-::: {.notes**
+::: {.notes}
 Running each of these manually is four separate commands. This takes you the developer time to switch to a terminal,
 make sure your virtual environment is activated and your in the same directory as your work, then run the commands.
 
