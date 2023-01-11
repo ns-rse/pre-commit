@@ -10,7 +10,7 @@ format:
     show-slide-number: speaker
     # embed-resources: true
     # standalone: true
-footer: "[**github.com/ns-rse/pre-commit**](https://github.com/ns-rse/ns-rse.github.io)"
+footer: "[**github.com/ns-rse/pre-commit**](https://github.com/ns-rse/pre-commit)"
 ---
 
 
