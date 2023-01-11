@@ -39,3 +39,8 @@ repos:
   #       name: pytest
   #       entry: pytest --cov
   #       language: system
+ci:
+  autofix_prs: true
+  autoupdate_schedule: weekly
+  autoupdate_commit_msg: '[pre-commit.ci] pre-commit-autoupdate'
+  skip: [] # Optionally list ids of hooks to skip on CI
