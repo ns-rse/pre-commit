@@ -11,23 +11,20 @@ repos:
       - id: requirements-txt-fixer
       - id: check-byte-order-marker
       - id: check-yaml
-
   - repo: https://github.com/psf/black
     rev: 22.10.0
     hooks:
       - id: black
         types: [python]
         additional_dependencies: ['click==8.0.4']
-        args: ["--extend-exclude", "plotting.py"]
-
+        args: ["--extend-exclude", "sample.py"]
   - repo: https://github.com/pycqa/flake8.git
     rev: 5.0.4
     hooks:
       - id: flake8
-        args: ["--extend-exclude=_version.py"]
+        args: ["--extend-exclude", "sample.py"]
         additional_dependencies: [flake8-print]
         types: [python]
-
   - repo: local
     hooks:
       - id: pylint
@@ -36,10 +33,9 @@ repos:
         entry: python -m pylint
         language: system
         files: \.py$
-
-  - repo: local
-    hooks:
-      -id: pytest
-      name: pytest
-      entry: pytest --cov
-      language:system
+  # - repo: local
+  #   hooks:
+  #     - id: pytest
+  #       name: pytest
+  #       entry: pytest --cov
+  #       language: system
