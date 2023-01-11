@@ -1,0 +1,191 @@
+[
+  {
+    "objectID": "index.html#introduction",
+    "href": "index.html#introduction",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "Introduction",
+    "text": "Introduction\n\nResearch Software Engineer at University of Sheffield\nBackground Statistical Genetics, Medical Statistics and Data Scientist for Telematics Company\nBlog Post (2022-10-10) : pre-commit : Protecting your future self\n\n\n\nGood morning/afternoon, my name is Neil Shephard and I’m a Research Software Engineer at the University of Sheffield. I’ve matured into this role after a convoluted career pathway via Statistical Genetics, Medical Statistics during which I developed a keen interest in reproducible research and started using Git.\nPrior to starting in my current role I spent a few years as a Data Scientist at a telematics company where I didn’t really do much data science but did learn Python, working collaboratively with Git and good practices for software development and engineering.\nI was invited here today by Alex Coleman, thank you Alex, on the back of a blog post I wrote pre-commit : Protecting your Future Self and the QR code will take you to the blog post if you’re quick enough to scan it before I move on."
+  },
+  {
+    "objectID": "index.html#structure",
+    "href": "index.html#structure",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "Structure",
+    "text": "Structure\n\n(Very) brief Git version control.\nA digression into Linting and Testing.\nGit Hooks.\npre-commit installation.\npre-commit configuration.\npre-commit demo.\npre-commit in CI/CD.\n\n\nIn this talk I’ll give a very brief overview of using Git for version control before making a digression into linting and testing. We’ll then look at Git Hooks because they underpin the functionality of pre-commit and I’ll then go through installing and configuring pre-commit, hopefully give a demonstration that won’t fail and then show how pre-commit can be integrated into Continuous Integration and Development pipelines."
+  },
+  {
+    "objectID": "index.html#git",
+    "href": "index.html#git",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "Git",
+    "text": "Git\n\nxkcd (1597)\nOk, Git is pretty popular but could I have a show of hands for how many people are familiar with and use Git on a daily basis please?\nPause\nGreat, looks like most of the audience are familiar with Git."
+  },
+  {
+    "objectID": "index.html#git-workflow",
+    "href": "index.html#git-workflow",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "Git Workflow",
+    "text": "Git Workflow\n\n\n\n\n\n%%{init: { 'logLevel': 'debug', 'theme': 'base', 'gitGraph': {'showBranches': true,'showCommitLabel': true, 'rotateCommitLabel': true}} }%%\ngitGraph\n    commit\n    commit\n    branch feature1\n    checkout main\n    commit\n    checkout feature1\n    commit\n    commit\n    checkout main\n    branch feature2\n    checkout feature2\n    commit\n    commit\n    checkout feature1\n    commit\n    checkout main\n    merge feature1 tag: \"v0.1.1\"\n    checkout feature2\n    commit\n    commit\n    checkout main\n    merge feature2 tag: \"v0.1.2\"\n    commit\n\n\n\n\n\n\n\n\n\nA typical workflow of a version controlled directory is shown here\n\nMake a branch from main.\nEdit some files.\nStage and commit changes.\nPush to remote origin.\nMake a pull request.\nMerge changes into main and if you’re lucky you don’t have any merge conflicts."
+  },
+  {
+    "objectID": "index.html#linting-and-testing",
+    "href": "index.html#linting-and-testing",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "Linting and Testing",
+    "text": "Linting and Testing\nA digression…\n\nGood practice to lint code & conform to Style Guides\nGood practice to have tests in place for code.\n\n\nWe’ll now take a short digression on good practices when writing code and look at linting and testing of code as these are steps that pre-commit helps simplify.\nWhen you write code it is sensible to write tests to ensure that your functions, methods and classes work as expected.\nSimilarly it is good practice to lint your code to ensure it conforms to style guides and remove any “smells”."
+  },
+  {
+    "objectID": "index.html#a-simple-function",
+    "href": "index.html#a-simple-function",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "A simple 🐍 function",
+    "text": "A simple 🐍 function\nsample.py\nimport numpy as np\n\nfrom pathlib import Path\n\ndef find_files(file_path: Union[str, Path], file_ext: str) -> List:\n    \"\"\"Recursively find files of the stated type along the given file path.\"\"\"\n    # We have a really long comment on this line just for demonstration purposes so that we can generate a few errors that need linting\n    try:\n        return list(Path(file_path).rglob(f\"**{file_ext}\"))\n    except:\n        raise\n\nThis is a simple function in Python that we’ll use to demonstrate linting and tests. You don’t need to be too familiar with Python to understand and follow along but a quick explanation is that a few libraries are imported, then the function find_files is defined, it takes two arguments a file path and a file type and it will try to recursively find all files ending with the given extension along that path, and if an exception is encountered it is raised."
+  },
+  {
+    "objectID": "index.html#testing",
+    "href": "index.html#testing",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "Testing",
+    "text": "Testing\ntest_sample.py\nfrom .sample import find_files\n\ndef test_find_files():\n    \"\"\"Test the find_files() function\"\"\"\n    py_files = find_files(file_path=\"./\", file_ext=\".py\")\n    assert isinstance(py_files, list)\n    assert \"sample.py\" in py_files\n\nThis is a simple example of a test that you might write to check this file, it imports the function and uses it to look in the current directory for files with the extension .py saving the results to py_files. The type of this is checked to be a lit and the presence of sample.py in that list is checked."
+  },
+  {
+    "objectID": "index.html#linting-and-style-guides",
+    "href": "index.html#linting-and-style-guides",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "Linting and Style Guides",
+    "text": "Linting and Style Guides\nPython has the PEP8 style guide sets out a consistent way to write code, naming function, classes and methods. Lots of tools for linting…\n\nblack PEP8 compliance.\nflake8 PEP8 compliance.\npylint PEP8 compliance, code smells and refactoring suggestions."
+  },
+  {
+    "objectID": "index.html#linting-and-testing-manually",
+    "href": "index.html#linting-and-testing-manually",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "Linting and Testing manually…",
+    "text": "Linting and Testing manually…\nblack sample.py\nflake8 sample.py\npylint sample.py\npytest test_sample.py\n\nIf you were running linting manually then you would have to invoke each and run them against a specific file, or all files in a project directory. Running black against your code base could actually cause problems as it will reformat files in place using its opinionated style. You would then have to commit those changes and the blame would be associated with code that you only formatted rather than wrote. There are ways around this using Git’s --ignore-rev flag to store commits in a file .git-blame-ignore-revs that lists the hashes for which blame is to be ignored (see article)"
+  },
+  {
+    "objectID": "index.html#linting-manually",
+    "href": "index.html#linting-manually",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "Linting manually",
+    "text": "Linting manually\nblack\n❱ black sample.py\nAll done! ✨ 🍰 ✨\n1 file changed.\nflake8\n❱ flake8 sample.py\nsample.py:1:1: D100 Missing docstring in public module\nsample.py:1:1: F401 'numpy as np' imported but unused\nsample.py:2:1: F401 'pandas as pd' imported but unused\nsample.py:7:36: F821 undefined name 'Union'\nsample.py:7:73: F821 undefined name 'List'\nsample.py:8:80: E501 line too long (87 > 79 characters)\nsample.py:9:80: E501 line too long (135 > 79 characters)\nsample.py:12:5: E722 do not use bare 'except'\npylint\n❱ pylint sample.py\n************* Module sample\nsample.py:9:0: C0301: Line too long (135/120) (line-too-long)\nsample.py:1:0: C0114: Missing module docstring (missing-module-docstring)\nsample.py:7:35: E0602: Undefined variable 'Union' (undefined-variable)\nsample.py:7:72: E0602: Undefined variable 'List' (undefined-variable)\nsample.py:12:4: W0706: The except handler raises immediately (try-except-raise)\nsample.py:4:0: C0411: standard import \"from pathlib import Path\" should be placed before \"import numpy as np\" (wrong-import-order)\nsample.py:1:0: W0611: Unused numpy imported as np (unused-import)\nsample.py:2:0: W0611: Unused pandas imported as pd (unused-import)\n\n-------------------------------------\nYour code has been rated at -10.00/10\npytest TODO Add output from running test_sample.py\n❱ pylint test_sample.py"
+  },
+  {
+    "objectID": "index.html#then-you-can-commit-and-push",
+    "href": "index.html#then-you-can-commit-and-push",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "…then you can commit and push",
+    "text": "…then you can commit and push\nTODO Resize image \n\nGit work cycles encourages regular saving of work, by staging and committing work into Git. Periodically you should Git push to ensure your work is backed up just in case of fires and such like.\nBut the process of repeatedly linting and testing your code quickly becomes time consuming and tedious and you may even forget to do so before making commits. This means there is potential"
+  },
+  {
+    "objectID": "index.html#automate-with-pre-commit",
+    "href": "index.html#automate-with-pre-commit",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "Automate with pre-commit",
+    "text": "Automate with pre-commit\n\nUses Git Hooks to run checks automatically.\nLarge number of supported hooks available to use.\nWritten in Python but hooks for most languages."
+  },
+  {
+    "objectID": "index.html#what-are-hooks",
+    "href": "index.html#what-are-hooks",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "What are Hooks?",
+    "text": "What are Hooks?\n\nActions that are run prior to or in response to a given action.\n\n❱ ls -lha .git/hooks\ndrwxr-xr-x neil neil 4.0 KB Mon Oct 24 10:26:37 2022  .\ndrwxr-xr-x neil neil 4.0 KB Tue Jan  3 18:48:37 2023  ..\n.rwxr-xr-x neil neil 478 B  Sun Aug 14 13:35:27 2022  applypatch-msg.sample\n.rwxr-xr-x neil neil 896 B  Sun Aug 14 13:35:27 2022  commit-msg.sample\n.rwxr-xr-x neil neil 4.6 KB Sun Aug 14 13:35:27 2022  fsmonitor-watchman.sample\n.rwxr-xr-x neil neil 189 B  Sun Aug 14 13:35:27 2022  post-update.sample\n.rwxr-xr-x neil neil 424 B  Sun Aug 14 13:35:27 2022  pre-applypatch.sample\n.rwxr-xr-x neil neil 1.6 KB Sun Aug 14 13:35:27 2022  pre-commit.sample\n.rwxr-xr-x neil neil 416 B  Sun Aug 14 13:35:27 2022  pre-merge-commit.sample\n.rwxr-xr-x neil neil 1.3 KB Sun Aug 14 13:35:27 2022  pre-push.sample\n.rwxr-xr-x neil neil 4.8 KB Sun Aug 14 13:35:27 2022  pre-rebase.sample\n.rwxr-xr-x neil neil 544 B  Sun Aug 14 13:35:27 2022  pre-receive.sample\n.rwxr-xr-x neil neil 1.5 KB Sun Aug 14 13:35:27 2022  prepare-commit-msg.sample\n.rwxr-xr-x neil neil 2.7 KB Sun Aug 14 13:35:27 2022  push-to-checkout.sample\n.rwxr-xr-x neil neil 3.6 KB Sun Aug 14 13:35:27 2022  update.sample\n\nHooks are actions that are run prior to or in response to a given action.\nA Git repository that has been initialised locally typically comes with a number of example scripts that run hooks in response to different actions or steps in the git work cycle and these can be found under .git/hooks/ if you’ve cloned a repository then these .git directory generally isn’t included so you won’t have these.\nAs you can see from the directory listing there are a number of different stages at which hooks might apply, but as the name of this talk gives away, the key hook of interest here is the pre-commit hook.\nThese are Bash scripts and you could sit down and craft your own script to undertake all the tasks you wish to run prior to making commits. However pre-commit and its array of hooks takes the need to do this out of your hands."
+  },
+  {
+    "objectID": "index.html#system-installation-of-pre-commit",
+    "href": "index.html#system-installation-of-pre-commit",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "System installation of pre-commit",
+    "text": "System installation of pre-commit\n\n\nPython Package\n❱ workon a_virtual_env\n❱ pip install pre-commit\n\n❱ conda activate conda_env\n❱ conda install -c \\\n        conda-forge pre-commit\n\nGNU/Linux\n# Arch\n❱ pacman -Syu python-pre-commit\n# Gentoo\n❱ emerge -av pre-commit\n# Debian/Ubuntu\n❱ sudo apt install pre-commit\nOSX\n❱ brew install pre-commit\n\n\n\nAs pre-commit is a Python package the typically way to install it is within a virtual environment using the pip command which will install it from the Python Package Index or if you use Conda for your virtual environments its available on the conda-forge.\nIf you use GNU/Linux then many package managers have pre-commit available in the package repositories to install and some examples of how to install the relevant packages under Arch, Gentoo and Ubuntu are shown.\nThe OSX package manager homebrew also includes pre-commit so you can brew install."
+  },
+  {
+    "objectID": "index.html#pre-commit-config.yaml",
+    "href": "index.html#pre-commit-config.yaml",
+    "title": "Pre-commit : Protecting your future self",
+    "section": ".pre-commit-config.yaml",
+    "text": ".pre-commit-config.yaml\nRoot of a project under Git version control.\nrepos:\n  - repo: https://github.com/pre-commit/pre-commit-hooks\n    rev: v4.3.0  # Use the ref you want to point at\n    hooks:\n      - id: trailing-whitespace\n        types: [file, text]\n      - id: end-of-file-fixer\n        types: [file, text]\n      - id: check-docstring-first\n      - id: check-case-conflict\n      - id: requirements-txt-fixer\n      - id: check-byte-order-marker\n      - id: check-yaml\n  - repo: https://github.com/psf/black\n    rev: 22.10.0\n    hooks:\n      - id: black\n        types: [python]\n        additional_dependencies: ['click==8.0.4']\n        args: [\"--extend-exclude\", \"plotting.py\"]\n  - repo: https://github.com/pycqa/flake8.git\n    rev: 5.0.4\n    hooks:\n      - id: flake8\n        args: [\"--extend-exclude\", \"_version.py\"]\n        additional_dependencies: [flake8-print]\n        types: [python]\n  - repo: local\n    hooks:\n      - id: pylint\n        args: [\"--rcfile=.pylintrc\"]\n        name: Pylint\n        entry: python -m pylint\n        language: system\n        files: \\.py$\n  - repo: local\n    hooks:\n      - id: pytest\n        name: pytest\n        entry: pytest --cov\n        language:system"
+  },
+  {
+    "objectID": "index.html#hook-configuration",
+    "href": "index.html#hook-configuration",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "Hook configuration",
+    "text": "Hook configuration\n  - repo: https://github.com/pre-commit/pre-commit-hooks\n    rev: v4.3.0  # Use the ref you want to point at\n    hooks:\n      - id: trailing-whitespace\n        types: [file, text]\n      - id: end-of-file-fixer\n        types: [file, text]\n      - id: check-docstring-first\n      - id: check-case-conflict\n      - id: requirements-txt-fixer\n      - id: check-byte-order-marker\n      - id: check-yaml\n  - repo: https://github.com/psf/black\n    rev: 22.10.0\n    hooks:\n      - id: black\n        types: [python]\n        additional_dependencies: ['click==8.0.4']\n        args: [\"--extend-exclude\", \"plotting.py\"]"
+  },
+  {
+    "objectID": "index.html#local-hook-configuration",
+    "href": "index.html#local-hook-configuration",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "Local Hook Configuration",
+    "text": "Local Hook Configuration\n  - repo: local\n    hooks:\n      -id: pytest\n      name: pytest\n      entry: pytest --cov\n      language: system"
+  },
+  {
+    "objectID": "index.html#project-pre-commit-installation",
+    "href": "index.html#project-pre-commit-installation",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "Project pre-commit installation",
+    "text": "Project pre-commit installation\n❱ git add .pre-commit-config\n❱ pre-commit --version\n❱ pre-commit install\npre-commit installed at .git/hooks/pre-commit\n\nNow that pre-commit is installed on your system and a configuration file has been added to your repository we can install the pre-commit hook in the repository. You can first check that pre-commit is available using the --version flag and then install it."
+  },
+  {
+    "objectID": "index.html#check-existing-files",
+    "href": "index.html#check-existing-files",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "Check existing Files",
+    "text": "Check existing Files\n❱ pre-commit run --all-files\n[INFO] Initializing environment for https://github.com/pre-commit/pre-commit-hooks.\n[INFO] Initializing environment for https://github.com/psf/black.\n[INFO] Initializing environment for https://github.com/pycqa/flake8.git.\n[INFO] Installing environment for https://github.com/pre-commit/pre-commit-hooks.\n[INFO] Once installed this environment will be reused.\n[INFO] This may take a few minutes...\n[INFO] Installing environment for https://github.com/psf/black.\n[INFO] Once installed this environment will be reused.\n[INFO] This may take a few minutes...\n[INFO] Installing environment for https://github.com/pycqa/flake8.git\n[INFO] Once installed this environment will be reused.\n[INFO] This may take a few minutes...\nCheck Yaml.....................................................Passed\nFix End of Files...............................................Passed\nTrim Trailing Whitespace.......................................Failed\n- hook id: trailing-whitespace\n- exit code: 1\n\nFiles were modified by this hook. Additional output:\n\nFixing sample.py\n\nblack..........................................................Passed\nflake8.........................................................Passed\n- hook id: flake8\n- exit code: 1\n\nsample.py:1:1: D100 Missing docstring in public module\nsample.py:1:1: F401 'numpy as np' imported but unused\nsample.py:2:1: F401 'pandas as pd' imported but unused\nsample.py:7:36: F821 undefined name 'Union'\nsample.py:7:73: F821 undefined name 'List'\nsample.py:8:80: E501 line too long (87 > 79 characters)\nsample.py:9:80: E501 line too long (135 > 79 characters)\nsample.py:12:5: E722 do not use bare 'except'\n\npylint.........................................................Failed\n- hook id: pylint\n- exit code: 1\n\n************* Module python.sample\nsample.py:9:0: C0301: Line too long (135/120) (line-too-long)\nsample.py:1:0: C0114: Missing module docstring (missing-module-docstring)\nsample.py:7:35: E0602: Undefined variable 'Union' (undefined-variable)\nsample.py:12:4: W0706: The except handler raises immediately (try-except-raise)\nsample.py:1:0: W0611: Unused numpy imported as np (unused-import)\nsample.py:2:0: W0611: Unused pandas imported as pd (unused-import)\nsample.py:4:0: C0411: standard import \"from pathlib import Path\" should be placed before \"import numpy as np\" (wrong-import-order)\n\n------------------------------------\nYour code has been rated at -3.75/10\npytest.........................................................Passed"
+  },
+  {
+    "objectID": "index.html#run-pre-commit-on-commit",
+    "href": "index.html#run-pre-commit-on-commit",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "Run pre-commit on commit",
+    "text": "Run pre-commit on commit\nCorrect flake8 pylint and other errors and git commit\ngit add sample.py test_sample.py\ngit commit -m \"Adding sample and its test.\"\nCheck Yaml.....................................................Passed\nFix End of Files...............................................Passed\nTrim Trailing Whitespace.......................................Passed\nblack..........................................................Passed\nflake8.........................................................Passed\npylint.........................................................Passed\npytest.........................................................Passed\n\nAs we have already fixed the trailing whitespace issue and now adddressed the flake8 and pylint errors pre-commit passes all its tests and the commit is made.\nThis automated cycle shortens the feedback loop of linting and testing and means you’ve more time to resolve the issues."
+  },
+  {
+    "objectID": "index.html#github-pre-commit",
+    "href": "index.html#github-pre-commit",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "GitHub pre-commit",
+    "text": "GitHub pre-commit\nGitHub has many Actions which can run on different triggers.\n\nLike hooks, actions that run under certain conditions e.g. push or push to main branch.\nUseful if not all contributors use pre-commit in their workflow.\nDefined in .github/workflows/*.yaml\nWrite your own to run pre-commit or…\n…use pre-commit.ci"
+  },
+  {
+    "objectID": "index.html#pre-commit.ci",
+    "href": "index.html#pre-commit.ci",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "pre-commit.ci",
+    "text": "pre-commit.ci\n\nFast.\nCorrects issues automatically (e.g. black) without need for developer to reformat.\nAutomatically updates .pre-commit-config.yaml for you (e.g. new rev).\nConfigured via ci: section in .pre-commit-config.yaml.\nFree for open source repositories (paid for version for private/organisation repositories)."
+  },
+  {
+    "objectID": "index.html#configuration",
+    "href": "index.html#configuration",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "Configuration",
+    "text": "Configuration\n\nci:\n  autofix_prs: true\n  autoupdate_schedule: weekly\n  autoupdate_commit_msg: '[pre-commit.ci] pre-commit-autoupdate'\n  skip: [] # Optionally list ids of hooks to skip on CI"
+  },
+  {
+    "objectID": "index.html#bonus---linting-with-ide",
+    "href": "index.html#bonus---linting-with-ide",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "Bonus - Linting with IDE",
+    "text": "Bonus - Linting with IDE\nPopular IDEs have tools to run linting automatically on file save…\n\nEmacs : blacken / Flycheck\nVSCode : Python /\nPyCharm : black / Mypy / flake8\nRStudio : lintr\n\n\nMany popular Integrated Development Environments support linting of code on the fly or on saving files, Emacs has blacken and flycheck modes, the later of which will run flake8.\nVSCode has a Python module for linting.\nPyCharm has plugins for black, mypy and flake8\nRStudio has support for the lintr package (as does Emacs).\nUsing these tools is sensible as it can highlight quickly and early on problems with your code. Applying black automatically also takes out some mental overhead in thinking about whether you are using the correct formatting whilst writing code allowing you to focus on the problem you are trying to solve."
+  },
+  {
+    "objectID": "index.html#committing",
+    "href": "index.html#committing",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "Committing",
+    "text": "Committing\nUltimately you commit your changes then…\n\nPush to origin\nOpen a Pull Request.\nSee if test passes all CI tests.\nAwait feedback and hopefully approval."
+  },
+  {
+    "objectID": "index.html#problems",
+    "href": "index.html#problems",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "Problems",
+    "text": "Problems\n\nAutomated tests fail.\nLinting fails."
+  },
+  {
+    "objectID": "index.html#pre-commit",
+    "href": "index.html#pre-commit",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "Pre-commit",
+    "text": "Pre-commit\n\n\n\n\nThis is where pre-commit comes to the rescue. Its a Python package that uses Git Hooks to run checks before a commit is made, hence the name! It can take care of running all the manual linting and tests for you and automate part of your workflow.\nHooks are scripts that reside in .git/hooks/\n\n\n\ngithub.com/ns-rse/pre-commit"
+  }
+]

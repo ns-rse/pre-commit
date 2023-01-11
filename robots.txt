@@ -1,0 +1,1 @@
+Sitemap: https://ns-rse.github.io/pre-commit/sitemap.xml
