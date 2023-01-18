@@ -850,24 +850,30 @@ You can then follow the link to manage which repositories `pre-commit.ci` has ac
 ![](assets/img/github-pre-commit-access.png)
 
 [GitLab pre-commit](https://stackoverflow.com/collectives/articles/71270196/how-to-use-pre-commit-to-automatically-correct-commits-and-merge-requests-with-g)
+
 ::: {.notes}
 You can provide `pre-commit.ci` access to all of your repositories or fine grained control to only specific repositories
 and that is all you need to do. Now when you push to `master` or `main` or make pull requests
 `pre-commit.ci` will run.
 :::
 
+
 ## Add pre-commit badge
 
-Add a pre-commit badge to your repositories `README.md` and it will show if it has passed or failed the tests.
 
-![](assets/img/pre-commit-buttong.png)
-```{.markdown}
+![](assets/img/pre-commit-button.png)
+
+
+::: {.notes}
+Add a pre-commit badge to your repositories `README.md` and it will show if it has passed or failed the tests.
+:::
+
 
 ## Summary
 
 * :heavy_check_mark: `pre-commit` is useful for automating repetitive tasks.
 * :heavy_check_mark: Improves code quality by ensuring style guides are adhered to.
-* :heavy_check_mark: Automates running test suites and that they pass.
+* :heavy_check_mark: Automates running test suites and ensures they pass.
 * :heavy_check_mark: Integrates with CI/CD on GitHub and others.
 * :heavy_check_mark: Frees up developer time.
 
