@@ -856,6 +856,12 @@ and that is all you need to do. Now when you push to `master` or `main` or make 
 `pre-commit.ci` will run.
 :::
 
+## Add pre-commit badge
+
+Add a pre-commit badge to your repositories `README.md` and it will show if it has passed or failed the tests.
+
+![](assets/img/pre-commit-buttong.png)
+```{.markdown}
 
 ## Summary
 
