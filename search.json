@@ -25,7 +25,7 @@
     "href": "index.html#git",
     "title": "Pre-commit : Protecting your future self",
     "section": "Git",
-    "text": "Git\n\nxkcd (1597)\nOk, Git is pretty popular but could I have a show of hands for how many people are familiar with and use Git on a daily basis please?\nPause\nGreat, looks like most of the audience are familiar with Git and hopefully are a little more proficient than the XKCD protagonists."
+    "text": "Git\n\nxkcd (1597)https://xkcd.com/1597/\n\nOk, Git is pretty popular but could I have a show of hands for how many people are familiar with and use Git on a daily basis please?\nPause\nGreat, looks like most of the audience are familiar with Git and hopefully are a little more proficient than the XKCD protagonists."
   },
   {
     "objectID": "index.html#git-workflow",
@@ -39,7 +39,7 @@
     "href": "index.html#linting-and-testing",
     "title": "Pre-commit : Protecting your future self",
     "section": "Linting and Testing",
-    "text": "Linting and Testing\nA digression…\n\nGood practice to lint code & conform to Style Guides\nGood practice to have tests in place for code.\n\n\nWhen writing code and its good practice to lint your code to ensure it conforms to the languages style guides. These are useful because if code is written in a consistent style it makes it easier for multiple people, including your future self to read and understand.\nSimilarly it is sensible, and some would argue essential, to write tests to ensure that your functions, methods and sclasses work as expected. These tests are run regularly against your code base as it is developed to ensure that changes made to the code don’t break.\nOften these will be run as you write your code and as part of the Continuous Integration pipelines."
+    "text": "Linting and Testing\nA digression…\n\nGood practice to lint code & conform to Style Guides\nGood practice to have tests in place for code.\n\n\nhttps://rse.shef.ac.uk/blog/2022-04-19-linting/ (Linting - What is all the fluff about?)\n\nWhen writing code and it is good practice to lint your code to ensure it conforms to the languages style guides. These are useful because if code is written in a consistent style it makes it easier for multiple people, including your future self to read and understand.\nSimilarly it is sensible, and some would argue essential, to write tests to ensure that your functions, methods and sclasses work as expected. These tests are run regularly against your code base as it is developed to ensure that changes made to the code don’t break.\nOften these will be run as you write your code and as part of the Continuous Integration pipelines."
   },
   {
     "objectID": "index.html#a-simple-function",
@@ -60,7 +60,7 @@
     "href": "index.html#linting-and-testing-tools",
     "title": "Pre-commit : Protecting your future self",
     "section": "Linting and Testing Tools",
-    "text": "Linting and Testing Tools\n\nblack PEP8 compliance.\nflake8 PEP8 compliance.\npylint PEP8 compliance, code smells and refactoring suggestions.\npytest\n\n\nWe’ve got some sample code but it might not meet the style guides.\nStyle guides set out a consistent way to write and structure code and there are guides for different languages and sometimes even different styles within a language. For Python there is the PEP8 style guide and there are a number of tools that help with linting Python code to be comply with PEP8 such as black which mostly applies formatting, flake8 and pylint which check formatting and also look for code smells where poor design patterns have been used and make refactoring suggestions.\nThen there is the pytest framework for writing and running tests which I can highly recommend along with many of its extensions."
+    "text": "Linting and Testing Tools\n\nblack PEP8 compliance.\nflake8 PEP8 compliance.\npylint PEP8 compliance, code smells and refactoring suggestions.\npytest\n\n\nWe’ve got some sample code but it might not meet the style guides.\nStyle guides set out a consistent way to write and structure code and there are guides for different languages and sometimes even different styles within a language.\nFor Python there is the PEP8 style guide and there are a number of tools that help with linting Python code to be compliant with PEP8 such as black which mostly applies formatting, flake8 and pylint which check formatting and also look for code smells where poor design patterns have been used and make refactoring suggestions.\nThen there is the pytest framework for writing and running tests which I can highly recommend along with many of its extensions."
   },
   {
     "objectID": "index.html#linting-and-testing-manually",

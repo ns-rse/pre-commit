@@ -473,7 +473,8 @@ Neil Shephard
 <section id="git" class="slide level2">
 <h2>Git</h2>
 
-<img data-src="https://imgs.xkcd.com/comics/git.png" class="r-stretch quarto-figure-center"><p class="caption">xkcd (1597)</p><aside class="notes">
+<img data-src="https://imgs.xkcd.com/comics/git.png" class="r-stretch quarto-figure-center"><p class="caption">xkcd (1597)</p><p><a href="https://xkcd.com/1597/">https://xkcd.com/1597/</a></p>
+<aside class="notes">
 <p>Ok, Git is pretty popular but could I have a show of hands for how many people are familiar with and use Git on a daily basis please?</p>
 <p><strong>Pause</strong></p>
 <p>Great, looks like most of the audience are familiar with Git and hopefully are a little more proficient than the XKCD protagonists.</p>
@@ -560,8 +561,10 @@ gitGraph
 <li>Good practice to lint code &amp; conform to Style Guides</li>
 <li>Good practice to have tests in place for code.</li>
 </ul>
+
+<img data-src="assets/img/linting.png" class="r-stretch"><p><a href="https://rse.shef.ac.uk/blog/2022-04-19-linting/">https://rse.shef.ac.uk/blog/2022-04-19-linting/</a> (<a href="https://rse.shef.ac.uk/blog/2022-04-19-linting/">Linting - What is all the fluff about?</a>)</p>
 <aside class="notes">
-<p>When writing code and its good practice to lint your code to ensure it conforms to the languages style guides. These are useful because if code is written in a consistent style it makes it easier for multiple people, including your future self to read and understand.</p>
+<p>When writing code and it is good practice to lint your code to ensure it conforms to the languages style guides. These are useful because if code is written in a consistent style it makes it easier for multiple people, including your future self to read and understand.</p>
 <p>Similarly it is sensible, and some would argue essential, to write tests to ensure that your functions, methods and sclasses work as expected. These tests are run regularly against your code base as it is developed to ensure that changes made to the code don’t break.</p>
 <p>Often these will be run as you write your code and as part of the Continuous Integration pipelines.</p>
 <style type="text/css">
@@ -639,7 +642,8 @@ gitGraph
 </ul>
 <aside class="notes">
 <p>We’ve got some sample code but it might not meet the style guides.</p>
-<p>Style guides set out a consistent way to write and structure code and there are guides for different languages and sometimes even different styles within a language. For Python there is the PEP8 style guide and there are a number of tools that help with linting Python code to be comply with PEP8 such as <code>black</code> which mostly applies formatting, <code>flake8</code> and <code>pylint</code> which check formatting and also look for code smells where poor design patterns have been used and make refactoring suggestions.</p>
+<p>Style guides set out a consistent way to write and structure code and there are guides for different languages and sometimes even different styles within a language.</p>
+<p>For Python there is the PEP8 style guide and there are a number of tools that help with linting Python code to be compliant with PEP8 such as <code>black</code> which mostly applies formatting, <code>flake8</code> and <code>pylint</code> which check formatting and also look for code smells where poor design patterns have been used and make refactoring suggestions.</p>
 <p>Then there is the <code>pytest</code> framework for writing and running tests which I can highly recommend along with many of its extensions.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
