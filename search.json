@@ -193,21 +193,21 @@
     "href": "index.html#manage-repos-for-pre-commit.ci",
     "title": "Pre-commit : Protecting your future self",
     "section": "Manage Repos for pre-commit.ci",
-    "text": "Manage Repos for pre-commit.ci\n\nGitLab pre-commit ::: {.notes} You can provide pre-commit.ci access to all of your repositories or fine grained control to only specific repositories and that is all you need to do. Now when you push to master or main or make pull requests pre-commit.ci will run. :::"
+    "text": "Manage Repos for pre-commit.ci\n\nGitLab pre-commit\n\nYou can provide pre-commit.ci access to all of your repositories or fine grained control to only specific repositories and that is all you need to do. Now when you push to master or main or make pull requests pre-commit.ci will run."
   },
   {
     "objectID": "index.html#add-pre-commit-badge",
     "href": "index.html#add-pre-commit-badge",
     "title": "Pre-commit : Protecting your future self",
     "section": "Add pre-commit badge",
-    "text": "Add pre-commit badge\nAdd a pre-commit badge to your repositories README.md and it will show if it has passed or failed the tests.\n ```{.markdown}"
+    "text": "Add pre-commit badge\n\n\nAdd a pre-commit badge to your repositories README.md and it will show if it has passed or failed the tests."
   },
   {
     "objectID": "index.html#summary",
     "href": "index.html#summary",
     "title": "Pre-commit : Protecting your future self",
     "section": "Summary",
-    "text": "Summary\n\n✔️ pre-commit is useful for automating repetitive tasks.\n✔️ Improves code quality by ensuring style guides are adhered to.\n✔️ Automates running test suites and that they pass.\n✔️ Integrates with CI/CD on GitHub and others.\n✔️ Frees up developer time."
+    "text": "Summary\n\n✔️ pre-commit is useful for automating repetitive tasks.\n✔️ Improves code quality by ensuring style guides are adhered to.\n✔️ Automates running test suites and ensures they pass.\n✔️ Integrates with CI/CD on GitHub and others.\n✔️ Frees up developer time."
   },
   {
     "objectID": "index.html#bonus---linting-with-ide",
