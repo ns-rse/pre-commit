@@ -69,7 +69,9 @@ through installing and configuring pre-commit, hopefully give a demonstration th
 
 ## Git
 
-[![xkcd (1597)](https://imgs.xkcd.com/comics/git.png)](https://xkcd.com/1597/)
+![xkcd (1597)](https://imgs.xkcd.com/comics/git.png)
+
+[https://xkcd.com/1597/](https://xkcd.com/1597/)
 
 ::: {.notes}
 Ok, Git is pretty popular but could I have a show of hands for how many people are familiar with and use Git on a daily
@@ -135,8 +137,14 @@ A digression...
 + Good practice to lint code & conform to Style Guides
 + Good practice to have tests in place for code.
 
+![](assets/img/linting.png)
+
+[https://rse.shef.ac.uk/blog/2022-04-19-linting/](https://rse.shef.ac.uk/blog/2022-04-19-linting/) ([Linting - What is
+all the fluff about?](https://rse.shef.ac.uk/blog/2022-04-19-linting/))
+
+
 ::: {.notes}
-When writing code and  its good practice to lint your code to ensure it conforms to the languages style guides. These
+When writing code and it is good practice to lint your code to ensure it conforms to the languages style guides. These
 are useful because if code is written in a consistent style it makes it easier for multiple people, including your
 future self to read and understand.
 
@@ -210,9 +218,10 @@ the file `sample.py` in that list is made.
 We've got some sample code but it might not meet the style guides.
 
 Style guides set out a consistent way to write and structure code and there are guides for different languages and
-sometimes even different styles within a language. For Python there is the PEP8 style guide and there are a number of
-tools that help with linting Python code to be comply with PEP8 such as `black` which mostly applies formatting,
-`flake8` and `pylint` which check formatting and also look for code smells where poor design patterns have been used and
+sometimes even different styles within a language.
+
+For Python there is the PEP8 style guide and there are a number of tools that help with linting Python code to be compliant
+with PEP8 such as `black` which mostly applies formatting, `flake8` and `pylint` which check formatting and also look for code smells where poor design patterns have been used and
 make refactoring suggestions.
 
 Then there is the `pytest` framework for writing and running tests which I can highly recommend along with many of its
