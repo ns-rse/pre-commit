@@ -203,6 +203,27 @@
     "text": "Add pre-commit badge\n\n\nAdd a pre-commit badge to your repositories README.md and it will show if it has passed or failed the tests."
   },
   {
+    "objectID": "index.html#pre-commit-github-action",
+    "href": "index.html#pre-commit-github-action",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "Pre-commit GitHub Action",
+    "text": "Pre-commit GitHub Action\n\n\nWhen you make a Pull Request on your repository the GitHub Actions run and you can see at the bottom here that the pre-commit.ci job is listed. If we click on details…"
+  },
+  {
+    "objectID": "index.html#pre-commit-pass",
+    "href": "index.html#pre-commit-pass",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "Pre-commit Pass",
+    "text": "Pre-commit Pass\n\nPass\n\nWe are taken to the job and can see exactly which checks were carried out and in this example we have pylint disabled so it shows as Skipped as were a few other steps but all the other checks passed. Sometimes jobs fail and"
+  },
+  {
+    "objectID": "index.html#pre-commit-fail",
+    "href": "index.html#pre-commit-fail",
+    "title": "Pre-commit : Protecting your future self",
+    "section": "Pre-commit Fail",
+    "text": "Pre-commit Fail\n\nFail\n\nHere you can see the pre-commit found trailing white spaces across a number of files and it went ahead and fixed them for us and automatically pushed them back to the branch for inclusion in the pull request."
+  },
+  {
     "objectID": "index.html#summary",
     "href": "index.html#summary",
     "title": "Pre-commit : Protecting your future self",

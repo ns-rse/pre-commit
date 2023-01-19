@@ -1316,6 +1316,59 @@ gitGraph
           display:block!important;
       }</style></aside>
 </section>
+<section id="pre-commit-github-action" class="slide level2">
+<h2>Pre-commit GitHub Action</h2>
+
+<img data-src="assets/img/pre-commit-ci-pass.png" class="r-stretch"><aside class="notes">
+<p>When you make a Pull Request on your repository the GitHub Actions run and you can see at the bottom here that the <code>pre-commit.ci</code> job is listed. If we click on details…</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="pre-commit-pass" class="slide level2">
+<h2>Pre-commit Pass</h2>
+
+<img data-src="assets/img/pre-commit-ci-pass2.png" class="r-stretch"><p><a href="https://results.pre-commit.ci/run/github/168173540/1674062271.Tj4xDOxqRFu3CDIPhXkMJA">Pass</a></p>
+<aside class="notes">
+<p>We are taken to the job and can see exactly which checks were carried out and in this example we have <code>pylint</code> disabled so it shows as <code>Skipped</code> as were a few other steps but all the other checks passed. Sometimes jobs fail and</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="pre-commit-fail" class="slide level2">
+<h2>Pre-commit Fail</h2>
+
+<img data-src="assets/img/pre-commit-ci-fail.png" class="r-stretch"><p><a href="https://results.pre-commit.ci/run/github/168173540/1674061180.-2Eo_dbfRAGrukip387Nhg">Fail</a></p>
+<aside class="notes">
+<p>Here you can see the <code>pre-commit</code> found trailing white spaces across a number of files and it went ahead and fixed them for us and automatically pushed them back to the branch for inclusion in the pull request.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
 <section id="summary" class="slide level2">
 <h2>Summary</h2>
 <ul>
