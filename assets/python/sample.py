@@ -4,7 +4,7 @@ import pandas as pd
 from pathlib import Path
 
 
-def find_and_load_files(file_path: Union[str, Path], file_type: str) -> list:
+def find_and_load_files(file_path: Union[str, Path], file_type: str) -> List:
     """Recursively find files of the stated type along the given file path."""
     # We have a really long comment on this line just for demonstration purposes so that we can generate a few errors that need linting
     try:

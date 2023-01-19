@@ -92,26 +92,26 @@ protagonists.
 gitGraph
     commit
     commit
-    branch feature1
+    branch bug1
     checkout main
     commit
-    checkout feature1
-    commit
-    commit
-    checkout main
-    branch feature2
-    checkout feature2
-    commit
-    commit
-    checkout feature1
-    commit
-    checkout main
-    merge feature1 tag: "v0.1.1"
-    checkout feature2
+    checkout bug1
     commit
     commit
     checkout main
-    merge feature2 tag: "v0.1.2"
+    branch bug2
+    checkout bug2
+    commit
+    commit
+    checkout bug1
+    commit
+    checkout main
+    merge bug1 tag: "v0.1.1"
+    checkout bug2
+    commit
+    commit
+    checkout main
+    merge bug2 tag: "v0.1.2"
     commit
 ```
 
@@ -137,10 +137,11 @@ A digression...
 + Good practice to lint code & conform to Style Guides
 + Good practice to have tests in place for code.
 
-![](assets/img/linting.png)
 
-[https://rse.shef.ac.uk/blog/2022-04-19-linting/](https://rse.shef.ac.uk/blog/2022-04-19-linting/) ([Linting - What is
-all the fluff about?](https://rse.shef.ac.uk/blog/2022-04-19-linting/))
+
+[![](assets/img/linting.png)](https://rse.shef.ac.uk/blog/2022-04-19-linting/)
+
+[Linting - What is all the fluff about?](https://rse.shef.ac.uk/blog/2022-04-19-linting/)
 
 
 ::: {.notes}
@@ -176,10 +177,12 @@ def find_files(file_path: Union[str, Path], file_ext: str) -> List:
 ```
 
 ::: {.notes}
-This is a simple function in Python that we'll use to demonstrate linting and tests. You don't need to be too familiar
-with Python to understand and follow along but a quick explanation is that a few libraries are imported, then the
-function find_files is defined, it takes two arguments a file path and a file extension and it will recursively find all
-files ending with the given extension along that path, and if an exception is encountered it is raised.
+In order to explain how `pre-commit` works I need and example so I've created this very simple Python function.
+
+You don't need to be too familiar with Python to understand and follow along but a quick explanation is that a few
+libraries are imported, then the function find_files is defined, it takes two arguments a file path and a file extension
+and it will recursively find all files ending with the given extension along that path, and if an exception is
+encountered it is raised.
 :::
 
 
@@ -225,8 +228,7 @@ with PEP8 such as `black` which mostly applies formatting, `flake8` and `pylint`
 make refactoring suggestions.
 
 Then there is the `pytest` framework for writing and running tests which I can highly recommend along with many of its
-extensions.
-
+extensions, although you could easily use the standard library `unittest` too if you wanted to.
 :::
 
 
@@ -239,16 +241,13 @@ pylint sample.py
 pytest test_sample.py
 ```
 
-([Who's to Blame?](https://rse.shef.ac.uk/blog/git-blame/))
+
 
 ::: {.notes}
 If you were running linting manually then you would have to invoke each and run them against a specific file or
 directory.
 
-Running black against your code base could actually cause problems as it will reformat files in place using its
-opinionated style. You would then have to commit those changes and the blame would be associated with code that you only
-formatted rather than wrote. There are ways around this using Git's `--ignore-rev` flag to store commits in a file
-`.git-blame-ignore-revs` that lists the hashes for which blame is to be ignored (see [article](https://akrabat.com/ignoring-revisions-with-git-blame/))
+Lets have a look at how our code measures up.
 :::
 
 :::{.scrollable}
@@ -354,12 +353,15 @@ What can we do to mitigate this?
 * Uses [Git Hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) to run checks automatically.
 * Written in Python but hooks for most languages.
 * Large number of [supported hooks](https://pre-commit.com/hooks.html) available to use.
+* Supports : C, C++, R, Java, JavaScript, PHP, LISP, Markdown, Go, Bash, Ansible, Docker, Lua, Jupyter Notebooks _and
+  more_.
 
 ::: {.notes}
 This is where `pre-commit` comes in handy. It uses Git Hooks to run checks automatically.
 
-It's written in Python but you don't need to know or use Python yourself to use `pre-commit` as there are a large number
-of existing `pre-commit` hooks that  are available to be used off the shelf.
+It's written in Python but beyond installing `pre-commit` you don't need to know or use Python yourself to use
+`pre-commit` as there are a large number of existing `pre-commit` hooks that are available to be used off the shelf for
+a whole array of common and not so common languages.
 :::
 
 
@@ -389,16 +391,16 @@ drwxr-xr-x neil neil 4.0 KB Tue Jan  3 18:48:37 2023  ..
 ::: {.notes}
 Hooks are actions that are run prior to or in response to a given action.
 
-When you initialise a Git repository locally a number of example run hooks that are disabled by default but could be run
-in response to different actions or steps in the git work cycle and these can be found under `.git/hooks/` if you've
-cloned a repository then these `.git` directory generally isn't included so you won't have these.
+When you initialise a Git repository locally a number of sample hooks installed under the `.git/hooks/` directory. If
+you've cloned a repository then these `.git` directory generally isn't included so you won't have these.
 
 This is a directory listing and you can see there are a number of different stages at which hooks might apply, but as the
 name of this talk gives away, the key hook of interest here is the `pre-commit` hook.
 
 These are Bash scripts and you could sit down and craft your own script to undertake all the tasks you wish to run prior
-to making commits. The `pre-commit` tool and its array of hooks takes away the need to do this and saves you a lot of
-time as all you need to do is configure the hooks you wish to run.
+to making commits.
+
+But `pre-commit` saves you a bunch of time thanks to the hooks it makes available, all you need to do is configure it.
 :::
 
 ## Installation of pre-commit
@@ -438,6 +440,7 @@ time as all you need to do is configure the hooks you wish to run.
 **OSX**
 
 ```{.bash}
+❱ sudo port install pre-commit
 ❱ brew install pre-commit
 ```
 :::
@@ -451,7 +454,7 @@ and you can optionally do this within a virtual environment or within a Conda En
 If you use GNU/Linux then many package managers have pre-commit available in the package repositories to install
 and some examples of how to install the relevant packages under Arch, Gentoo and Ubuntu are shown.
 
-The OSX package manager homebrew also includes pre-commit so you can `brew install`.
+The OSX package managers macports and homebrew also includes pre-commit so you can install with either of those.
 :::
 
 :::{.scrollable}
@@ -462,7 +465,7 @@ Root of a project under Git version control.
 ``` {.yaml}
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.3.0  # Use the ref you want to point at
+    rev: v4.3.0
     hooks:
       - id: trailing-whitespace
         types: [file, text]
@@ -479,12 +482,12 @@ repos:
       - id: black
         types: [python]
         additional_dependencies: ['click==8.0.4']
-        args: ["--extend-exclude", "plotting.py"]
+        args: ["--config pyproject.toml"]
   - repo: https://github.com/pycqa/flake8.git
     rev: 5.0.4
     hooks:
       - id: flake8
-        args: ["--extend-exclude", "_version.py"]
+        args: ["--config setup.cfg"]
         additional_dependencies: [flake8-print]
         types: [python]
   - repo: local
@@ -508,16 +511,46 @@ repos:
 Configuration of pre-commit is via a YAML file called `.pre-commit-config.yaml` and this should reside in the root of a
 project that is under Git version control.
 
-The top-level defines `repos:` and you then enable and configure each of the `pre-commit` hooks you wish to use for your
-repository under its own `- repo` section. This example is configured to run some of the main `pre-commit-hooks` as well
-as the `black`, `flake8` and two `local` hooks that run `pylint` and `pytest`.
+The top-level defines `repos:` and you then enable and configure each of the `pre-commit` hooks you wish to use under
+its own `- repo` section.
 
+This example is configured to run some of the main `pre-commit-hooks` as well as the `black`, `flake8` and two `local`
+hooks that run `pylint` and `pytest`.
 
-Lets take a look at how a `pre-commit` hook is configured by focusing on the `black` checker.
+Lets take a look at how a `pre-commit` hook is configured.
 :::
 
 ::: {.scrollable}
-## Hook configuration
+## Hook configuration - pre-commit
+
+``` {.yaml}
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.3.0  # Use the rev you want to point at
+    hooks:
+      - id: trailing-whitespace
+        types: [file, text]
+      - id: end-of-file-fixer
+        types: [file, text]
+      - id: check-docstring-first
+      - id: check-case-conflict
+      - id: requirements-txt-fixer
+      - id: check-byte-order-marker
+      - id: check-yaml
+
+```
+:::
+
+::: {.notes}
+This is the main pre-commit repository configuration, it defines the repository from which the hook is downloaded and you must
+specify a revision to use.
+
+A series of `hooks` are then defined, here the `trailing-whitespace` and `end-of-file-fixer` are enabled to run on files
+of type text. There are then checks for `docstring-first`, `case-conflict`, `requirements-fixer`, `byte-order-marker`
+and finally a `check-yaml` hook enabled.
+:::
+
+::: {.scrollable}
+## Hook configuration - Black
 
 ``` {.yaml}
   - repo: https://github.com/psf/black
@@ -526,20 +559,21 @@ Lets take a look at how a `pre-commit` hook is configured by focusing on the `bl
       - id: black
         types: [python]
         additional_dependencies: ['click==8.0.4']
-        args: ["--extend-exclude", "plotting.py"]
+        args: ["--config pyproject.toml"]
 ```
 :::
+
 ::: {.notes}
-`pre-commit` hooks are typically hosted on GitHub (or other forge) and the `- repo:` field defines the URL from which a
-virtual environment will be downloaded and installed for running the hook. Each hook has a `rev`ision that the user can
-explicitly specify.  Repositories than have one or more `hooks` which have a unique `id`'s in this case `black` which
-works with files of `types` python. An additional dependency on `click` is defined and this configuration has some
-additional arguments that are passed to black to extend the list of excluded files, in this case excluding the file
-`plotting.py`.
+
+Here the `black` repo is configured with the URL and revision, its limited to `python` files via the `types` option and
+a required dependency `click` is pulled in.
+
+Finally we as users can pass additional arguments to `black` via the `args` line and here we're telling `black` to
+explicitly look for its configuration in the `pyproject.toml` file.
 :::
 
 ::: {.scrollable}
-## Local Hook Configuration
+## Hook Configuration - Local
 
 ``` {.yaml}
   - repo: local
@@ -555,14 +589,19 @@ Both the `pylint` and `pytest` hooks are configured differently, the `repo` here
 downloading a virtual environment to run the hook its going to use your existing local environment. This is because the
 environments that are available online do not include the packages that need to be installed to lint and test the code
 and so instead `pre-commit` uses the `system` where it is being run, i.e. the virtual environment you have activated.
+
+For Python projects there are other options, for example you could include a hook to run the static type checker `mypy`
+against your code base, there is an existing hook for this, or if you weren't using `pytest` you could configure
+`unittest` and its extension `nose` you could configure a local hook to run tests using those.
 :::
 
-## Project pre-commit installation
+## `pre-commit` installation
 
 
 ``` {.bash}
 ❱ git add .pre-commit-config
 ❱ pre-commit --version
+pre-commit 2.20.0
 ❱ pre-commit install
 pre-commit installed at .git/hooks/pre-commit
 ```
@@ -571,9 +610,41 @@ Now that `pre-commit` is installed on your system and a configuration file has b
 install the `pre-commit` hook in the repository.
 
 You add the configuration file to the repository, check that `pre-commit` is available using the `--version` flag and
-then install it.
+then install it.  This writes a bash script to `.git/hook/pre-commit` that runs `pre-commit` whenever you make a git
+commit, whether that is at the command line or through your IDE.
 :::
 
+
+<!-- ## `pre-commit` installation -->
+
+<!-- ``` {.bash} -->
+<!-- #!/usr/bin/env bash -->
+<!-- # File generated by pre-commit: https://pre-commit.com -->
+<!-- # ID: 138fd403232d2ddd5efb44317e38bf03 -->
+
+<!-- # start templated -->
+<!-- INSTALL_PYTHON=/home/neil/.virtualenvs/default/bin/python -->
+<!-- ARGS=(hook-impl --config=.pre-commit-config.yaml --hook-type=pre-commit) -->
+<!-- # end templated -->
+
+<!-- HERE="$(cd "$(dirname "$0")" && pwd)" -->
+<!-- ARGS+=(--hook-dir "$HERE" -- "$@") -->
+
+<!-- if [ -x "$INSTALL_PYTHON" ]; then -->
+<!--     exec "$INSTALL_PYTHON" -mpre_commit "${ARGS[@]}" -->
+<!-- elif command -v pre-commit > /dev/null; then -->
+<!--     exec pre-commit "${ARGS[@]}" -->
+<!-- else -->
+<!--     echo '`pre-commit` not found.  Did you forget to activate your virtualenv?' 1>&2 -->
+<!--     exit 1 -->
+<!-- fi -->
+<!-- ``` -->
+
+<!-- ::: {.notes} -->
+<!-- This is the Bash script that `pre-commit` has installed for you and what its doing is defining which version of Python -->
+<!-- to use and then running pre-commit with its own configuration file. -->
+
+<!-- ::: -->
 
 :::: {.scrollable}
 ## Check existing Files
@@ -628,13 +699,15 @@ pylint.........................................................Failed
 sample.py:9:0: C0301: Line too long (135/120) (line-too-long)
 sample.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 sample.py:7:35: E0602: Undefined variable 'Union' (undefined-variable)
+sample.py:7:72: E0602: Undefined variable 'List' (undefined-variable)
 sample.py:12:4: W0706: The except handler raises immediately (try-except-raise)
+sample.py:4:0: C0411: standard import "from pathlib import Path" should be placed before "import numpy as np" (wrong-import-order)
 sample.py:1:0: W0611: Unused numpy imported as np (unused-import)
 sample.py:2:0: W0611: Unused pandas imported as pd (unused-import)
-sample.py:4:0: C0411: standard import "from pathlib import Path" should be placed before "import numpy as np" (wrong-import-order)
 
-------------------------------------
-Your code has been rated at -3.75/10
+-------------------------------------
+Your code has been rated at -10.00/10
+
 pytest.........................................................Failed
 ================= test session starts =================
 platform linux -- Python 3.7.11, pytest-7.1.1, pluggy-1.0.0
@@ -654,20 +727,30 @@ ERROR test_sample.py - NameError: name 'Union' is not defined
 !!!!!!!! Interrupted: 1 error during collection !!!!!!!!
 =================== 1 error in 0.49s ===================
 ```
+
+
+![](assets/img/whos_to_blame.png){width=200}
+[Who's to Blame?](https://rse.shef.ac.uk/blog/git-blame/)
+
 ::::
 
 ::: {.notes}
 Normally `pre-commit` only runs against the files that have been changed in a given commit and so after installing
-it would be wise to run it against all files.
+it is often a good idea to run it against all files.
 
 The first time you run `pre-commit` it downloads Python virtual environments for each of the configured hooks so it can
-take a little while to run as it does this but as the output shows these are reused in future so once setup the process
-will run a lot quicker on subsequent runs of `pre-commit`.
+take a little while to run as the output shows, but these are reused in future runs so once setup the process will be a
+lot quicker on subsequent runs of `pre-commit`.
 
 Here we see it failed the "Trim trailing-whitespace" check and the file was modified.
 
 And as with the manual linting and tests we see the files were modified by `black`, failed `flake8` and `pylint` and
 because of these errors also failed  `pytest`.
+
+Its worth flagging up though that running black against a large code base could actually cause problems as it will
+reformat files in place using its opinionated style. You would then have to commit those changes and the blame would be
+associated with code that you only formatted rather than wrote. There are ways around this using Git's `--ignore-rev`
+flag and I've written another blog post on that.
 :::
 
 :::: {.scrollable}
@@ -681,7 +764,7 @@ import numpy as np
 
 from pathlib import Path
 
-def find_files(file_path: Union[str, Path], file_ext: str) -> list:
+def find_files(file_path: Union[str, Path], file_ext: str) -> List:
     """Recursively find files of the stated type along the given file path."""
     # Short comment
     try:
@@ -700,15 +783,17 @@ from typing import Union
 
 def find_files(file_path: Union[str, Path], file_type: str) -> list:
     """Recursively find files of the stated type along the given file path."""
-    return Path(file_path).rglob(f"*{file_type}")
+    return list(Path(file_path).rglob(f"*{file_type}"))
 
 ```
 ::::
 
 ::: {.notes}
-Lets fix the linting errors. You can see the original code and the linted code where we've addressed the problems that
-`flake8` and `pylint` were reporting by removing unused libraries, importing the missing `Union` class, removing the
-long comment line and removing the blank `try: ... except:`.
+Lets fix the linting errors. You can see the original code at the top and the linted code below where we've addressed
+the problems that`flake8` and `pylint` were reporting by removing unused libraries, importing the missing `Union` class,
+changing the returned to be a basic Python `list` rather than a class from the `typing` library.
+
+We've removed the long comment line and the plain `try: ... except:` instead just returning the list.
 :::
 
 ## Add and commit changes
@@ -716,13 +801,13 @@ long comment line and removing the blank `try: ... except:`.
 
 
 ``` {.bash}
-git add sample.py test_sample.py
+git add sample.py
 git commit -m "Linting sample.py."
 Check Yaml.....................................................Passed
 Fix End of Files...............................................Passed
 Trim Trailing Whitespace.......................................Passed
 black..........................................................Passed
-flake8.........................................................Passed
+flake8..........................................................Passed
 pylint.........................................................Passed
 pytest.........................................................Passed
 [INFO] Restored changes from /home/neil/.cache/pre-commit/patch1674045267-394193.
@@ -731,8 +816,8 @@ pytest.........................................................Passed
 ```
 
 ::: {.notes}
-So now we add the files and commit them and because we have installed `pre-commit` it runs as a hook and the checks we
-configured are run against the files we are committing, in this case `sample.py`.
+Now we add the files and commit them and because we have `pre-commit` configured and installed it runs as a hook and the
+checks we configured are run against the files we are committing, in this case `sample.py`.
 
 The tests pass and so the commit is made. The `[INFO]` line sometimes appears when you have unstaged changes that are
 not included in current commit.
@@ -752,11 +837,10 @@ apply these checks against their pull request before it is committed to the `mas
 
 ## Continuous Integration/Delivery (CI/CD)
 
-* Runs hooks on GitHub/GitLab/Codeberg/etc. in response to specific tasks/actions.
+* Runs hooks on GitHub/GitLab/etc. in response to specific tasks/actions.
 * [GitHub Actions](https://docs.github.com/en/actions) (see also [Actions
   Marketplace](https://github.com/marketplace?type=actions))
 * [GitLab Pipelines](https://docs.gitlab.com/ee/ci/pipelines/)
-* Codeberg uses [Woodpecker CI](https://woodpecker-ci.org/)
 * [Jenkins](https://www.jenkins.io/)
 
 ::: {.notes}
@@ -766,10 +850,11 @@ This involves running checks on Pull Requests before merging changes into `main`
 against them such as test suites or linting. Continuous delivery extends this and builds packages for release and tests that
 these work so they are ready to deploy.
 
-GitHub has Actions for performing these tasks, whilst GitLab has pipelines, Codeberg uses Woodpecker CI and another
-popular framework is Jenkins.
+GitHub has Actions for performing these tasks, whilst GitLab has what it calls Pipelines
 
-I'm going to talk about GitHub Actions.
+Another popular CI framework is Jenkins.
+
+For the remainder of this talk I'm going to focus on GitHub Actions.
 :::
 
 ## GitHub Actions
@@ -778,7 +863,7 @@ I'm going to talk about GitHub Actions.
 * Actions are hooks that run under certain conditions e.g. `push`  to `main` branch or `tag` beginning with `v`.
 * Useful for CI/CD.
 * Defined in `.github/workflows/*.yaml`
-* Write your own `pre-commit.yaml` or...
+* Write your own `.github/workflows/pre-commit.yaml` or...
 
 . . .
 
@@ -796,7 +881,7 @@ service to use in the form of `pre-commit.ci` which is a CI extension to `pre-co
 
 :::
 
-## pre-commit.ci
+## [pre-commit.ci](https://pre-commit.ci/)
 
 * Supports GitHub but more to come in the future.
 * Zero configuration, just need `.pre-commit-config.yaml`.
@@ -816,9 +901,15 @@ get to that shortly).
 If the configured `pre-commit` hooks make changes to your files such as `black` does `pre-commit.ci` will automatically
 fix the pull request.
 
-It will also automatically keep you `.pre-commit-config.yaml` up-to-date when new revisions come out.
+It will also automatically keep your `.pre-commit-config.yaml` up-to-date when new revisions of configured hooks become
+available.
 
 Its free for open source repositories, there are paid for options for private and organisation repositories.
+
+It really is worth using this over writing your own not just for the reasons described but it is also considerably
+faster because it caches the various environments that are used. If you wrote your own GitHub Action for this then on
+execution each runner would have to download all the hooks anew, setup and install any local environment and then run
+`pre-commit`.  There is no such overhead with `pre-commit.ci` so if you can I would recommend using it.
 :::
 
 ## Configuration (`.pre-commit-config.yaml`)
@@ -830,14 +921,15 @@ ci:
   autofix_commit_msg: '[pre-commit.ci] Fixing issues with pre-commit'
   autoupdate_schedule: weekly
   autoupdate_commit_msg: '[pre-commit.ci] pre-commit automatically updated.'
-  skip: [flake8] # Optionally list ids of hooks to skip on CI
+  skip: [pylint] # Optionally list ids of hooks to skip on CI
 ```
 
 ::: {.notes}
-You can if you want configure `pre-commit.ci` with a `ci:` section in your `.pre-commit-config.yaml`, this example shows
-some explicit options to automatically fix pull requests and the message to add when doing so.
+Its not required but you can if you want configure `pre-commit.ci` with a `ci:` section in your
+`.pre-commit-config.yaml`, this example shows some explicit options to automatically fix pull requests and the message
+to add when doing so.
 
-The update schedule is set to run `weekly` and as an example the `flake8` hook is set to be skipped.
+The update schedule is set to run `weekly` and as an example the `pylint` hook is set to be skipped.
 :::
 
 ## `pre-commit.ci` Setup
@@ -862,20 +954,21 @@ You can then follow the link to manage which repositories `pre-commit.ci` has ac
 
 ::: {.notes}
 You can provide `pre-commit.ci` access to all of your repositories or fine grained control to only specific repositories
-and that is all you need to do. Now when you push to `master` or `main` or make pull requests
-`pre-commit.ci` will run.
+and I would advocate going with the fine-grained control so you know what is happening where and when.
+
+That is all you need to do. Now when you push to `master` or `main` or make pull requests `pre-commit.ci` will run.
 :::
 
 
-## Add pre-commit badge
+<!-- ## Add pre-commit badge -->
 
 
-![](assets/img/pre-commit-button.png)
+<!-- ![](assets/img/pre-commit-button.png) -->
 
 
-::: {.notes}
-Add a pre-commit badge to your repositories `README.md` and it will show if it has passed or failed the tests.
-:::
+<!-- ::: {.notes} -->
+<!-- Add a pre-commit badge to your repositories `README.md` and it will show if it has passed or failed the tests. -->
+<!-- ::: -->
 
 ## Pre-commit GitHub Action
 
@@ -893,8 +986,10 @@ When you make a Pull Request on your repository the GitHub Actions run and you c
 [Pass](https://results.pre-commit.ci/run/github/168173540/1674062271.Tj4xDOxqRFu3CDIPhXkMJA)
 
 ::: {.notes}
-We are taken to the job and can see exactly which checks were carried out and in this example we have `pylint` disabled
-so it shows as `Skipped` as were a few other steps but all the other checks passed.  Sometimes jobs fail and
+We are taken to the job and can see exactly which checks were carried out and in this example because we disabled
+`pylint` from running under CI it shows as `Skipped` as were a few other steps but all the other checks passed.
+
+Sometimes jobs fail though...
 :::
 
 
@@ -906,17 +1001,27 @@ so it shows as `Skipped` as were a few other steps but all the other checks pass
 
 ::: {.notes}
 Here you can see the `pre-commit` found trailing white spaces across a number of files and it went ahead and fixed them
-for us and automatically pushed them back to the branch for inclusion in the pull request.
+for us and automatically pushed them back to the branch for inclusion in the pull request and we can click through and
+look at that.
 :::
 
 ## Summary
 
+::: {.incremental}
+
 * :heavy_check_mark: `pre-commit` is useful for automating repetitive tasks.
+* :heavy_check_mark: Helps keep git history clean (no more "linting code" commit messages).
 * :heavy_check_mark: Improves code quality by ensuring style guides are adhered to.
 * :heavy_check_mark: Automates running test suites and ensures they pass.
 * :heavy_check_mark: Integrates with CI/CD on GitHub and others.
 * :heavy_check_mark: Frees up developer time.
+:::
 
+## Alternatives
+
+* [Megalinter.io](https://megalinter.io) - comparable, lots of languages, lots of tools.
+* [Codacy](https://codacy.com) - only works with GitHub repos, not locally.
+* No doubt many others I'm not aware of!
 
 ## Bonus - Linting with IDE
 
