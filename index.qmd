@@ -877,9 +877,37 @@ and that is all you need to do. Now when you push to `master` or `main` or make 
 Add a pre-commit badge to your repositories `README.md` and it will show if it has passed or failed the tests.
 :::
 
-## Pre-commit Runs
+## Pre-commit GitHub Action
 
-![]|(assets/img/pre-commit)
+![](assets/img/pre-commit-ci-pass.png)
+
+::: {.notes}
+When you make a Pull Request on your repository the GitHub Actions run and you can see at the bottom here that the
+`pre-commit.ci` job is listed. If we click on details...
+:::
+
+## Pre-commit Pass
+
+![](assets/img/pre-commit-ci-pass2.png)
+
+[Pass](https://results.pre-commit.ci/run/github/168173540/1674062271.Tj4xDOxqRFu3CDIPhXkMJA)
+
+::: {.notes}
+We are taken to the job and can see exactly which checks were carried out and in this example we have `pylint` disabled
+so it shows as `Skipped` as were a few other steps but all the other checks passed.  Sometimes jobs fail and
+:::
+
+
+## Pre-commit Fail
+
+![](assets/img/pre-commit-ci-fail.png)
+
+ [Fail](https://results.pre-commit.ci/run/github/168173540/1674061180.-2Eo_dbfRAGrukip387Nhg)
+
+::: {.notes}
+Here you can see the `pre-commit` found trailing white spaces across a number of files and it went ahead and fixed them
+for us and automatically pushed them back to the branch for inclusion in the pull request.
+:::
 
 ## Summary
 
