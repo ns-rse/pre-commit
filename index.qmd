@@ -882,7 +882,7 @@ service to use in the form of `pre-commit.ci` which is a CI extension to `pre-co
 
 * Supports GitHub but more to come in the future.
 * Zero configuration, just need `.pre-commit-config.yaml`.
-* Corrects & commits issues automatically (e.g. `black`) without need for developer to reformat.
+* Corrects & commits formatting issues automatically without need for developer to reformat.
 * Automatically updates `.pre-commit-config.yaml` for you (e.g. new `rev`).
 * Free for open source repositories (paid for version for private/organisation repositories).
 
@@ -895,8 +895,8 @@ forth.
 Its really easy to use, you don't have to provide any specific configuration (although you can if you want to and I'll
 get to that shortly).
 
-If the configured `pre-commit` hooks make changes to your files such as `black` does `pre-commit.ci` will automatically
-fix the pull request.
+If the configured `pre-commit` hooks make simple formatting changes to your files `pre-commit.ci` will automatically fix
+the pull request.
 
 It will also automatically keep your `.pre-commit-config.yaml` up-to-date when new revisions of configured hooks become
 available.
@@ -979,6 +979,20 @@ When you make a Pull Request on your repository the GitHub Actions run and you c
 ## Pre-commit Pass
 
 ![](assets/img/pre-commit-ci-pass2.png)
+
+[Pass](https://results.pre-commit.ci/run/github/168173540/1674062271.Tj4xDOxqRFu3CDIPhXkMJA)
+
+::: {.notes}
+You get an overview for each repository you have enabled `pre-commit.ci` for showing the success and failures of
+historical runs and as you see here you can add a badge to your repository to indicate success.
+
+
+:::
+
+
+## Pre-commit Pass
+
+![](assets/img/pre-commit-ci-pass3.png)
 
 [Pass](https://results.pre-commit.ci/run/github/168173540/1674062271.Tj4xDOxqRFu3CDIPhXkMJA)
 
