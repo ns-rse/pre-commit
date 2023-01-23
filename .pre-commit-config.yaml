@@ -8,8 +8,6 @@ repos:
         types: [file, text]
       - id: check-docstring-first
       - id: check-case-conflict
-      - id: requirements-txt-fixer
-      - id: check-byte-order-marker
       - id: check-yaml
   - repo: https://github.com/psf/black
     rev: 22.10.0

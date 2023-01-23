@@ -250,7 +250,7 @@ directory.
 Lets have a look at how our code measures up.
 :::
 
-:::{.scrollable}
+::: {.scrollable}
 ## Linting manually
 
 `black`
@@ -316,15 +316,16 @@ ERROR test_sample.py - NameError: name 'Union' is not defined
 =================== 1 error in 0.49s ===================
 ```
 :::
+
 ::: {.notes}
 Running each of these manually is four separate commands. This takes you the developer time to switch to a terminal,
 make sure your virtual environment is activated and your in the same directory as your work, then run the commands.
 
-Black finds and corrects some errors.
+`black` finds and corrects some errors.
 
-Flake8 complains about some problems with the style of the code as does and we get a very poor score of -10.
+`flake8` complains about some problems with the style of the code as does `pylint` and we get a very poor score of -10.
 
-Pytest won't even run because of errors so we can't check our code.
+`pytest` won't even run because of errors so we can't check our code.
 
 You then correct any errors and repeat the cycle, albeit a little quicker and all of this before you can commit your
 changes to git....
@@ -337,7 +338,8 @@ changes to git....
 
 ::: {.notes}
 Git work cycles encourages regular saving of work, by staging and committing work into Git. Periodically
-you should Git push to ensure your work is backed up just in case of fires or your hard drive failing.
+you should Git push to your remote repository ensure your work is backed up just in case of fires or your hard drive
+failing.
 
 But the process of repeatedly linting and testing your code quickly becomes tedious and you may even forget to do so
 before making commits. This means there is potential for errors to creep into the code base if these steps aren't
@@ -457,7 +459,7 @@ and some examples of how to install the relevant packages under Arch, Gentoo and
 The OSX package managers macports and homebrew also includes pre-commit so you can install with either of those.
 :::
 
-:::{.scrollable}
+
 ## `.pre-commit-config.yaml`
 
 Root of a project under Git version control.
@@ -473,8 +475,6 @@ repos:
         types: [file, text]
       - id: check-docstring-first
       - id: check-case-conflict
-      - id: requirements-txt-fixer
-      - id: check-byte-order-marker
       - id: check-yaml
   - repo: https://github.com/psf/black
     rev: 22.10.0
@@ -506,7 +506,7 @@ repos:
         language:system
 ```
 
-:::
+
 ::: {.notes}
 Configuration of pre-commit is via a YAML file called `.pre-commit-config.yaml` and this should reside in the root of a
 project that is under Git version control.
@@ -520,7 +520,6 @@ hooks that run `pylint` and `pytest`.
 Lets take a look at how a `pre-commit` hook is configured.
 :::
 
-::: {.scrollable}
 ## Hook configuration - pre-commit
 
 ``` {.yaml}
@@ -533,23 +532,18 @@ Lets take a look at how a `pre-commit` hook is configured.
         types: [file, text]
       - id: check-docstring-first
       - id: check-case-conflict
-      - id: requirements-txt-fixer
-      - id: check-byte-order-marker
       - id: check-yaml
 
 ```
-:::
 
 ::: {.notes}
-This is the main pre-commit repository configuration, it defines the repository from which the hook is downloaded and you must
-specify a revision to use.
+This is the main pre-commit hooks repository configuration, it defines the repository from which the hook is downloaded
+and you must specify a revision to use.
 
 A series of `hooks` are then defined, here the `trailing-whitespace` and `end-of-file-fixer` are enabled to run on files
-of type text. There are then checks for `docstring-first`, `case-conflict`, `requirements-fixer`, `byte-order-marker`
-and finally a `check-yaml` hook enabled.
+of type text. There are then checks for `docstring-first`, `case-conflict` and finally a `check-yaml` hook enabled.
 :::
 
-::: {.scrollable}
 ## Hook configuration - Black
 
 ``` {.yaml}
@@ -561,10 +555,8 @@ and finally a `check-yaml` hook enabled.
         additional_dependencies: ['click==8.0.4']
         args: ["--config pyproject.toml"]
 ```
-:::
 
 ::: {.notes}
-
 Here the `black` repo is configured with the URL and revision, its limited to `python` files via the `types` option and
 a required dependency `click` is pulled in.
 
@@ -572,7 +564,6 @@ Finally we as users can pass additional arguments to `black` via the `args` line
 explicitly look for its configuration in the `pyproject.toml` file.
 :::
 
-::: {.scrollable}
 ## Hook Configuration - Local
 
 ``` {.yaml}
@@ -583,7 +574,7 @@ explicitly look for its configuration in the `pyproject.toml` file.
       entry: pytest --cov
       language: system
 ```
-:::
+
 ::: {.notes}
 Both the `pylint` and `pytest` hooks are configured differently, the `repo` here is local, which means that rather than
 downloading a virtual environment to run the hook its going to use your existing local environment. This is because the
@@ -665,6 +656,8 @@ commit, whether that is at the command line or through your IDE.
 [INFO] This may take a few minutes...
 Check Yaml.....................................................Passed
 Fix End of Files...............................................Passed
+Check for case conflicts.......................................Passed
+Check docstring is first.......................................Failed
 Trim Trailing Whitespace.......................................Failed
 - hook id: trailing-whitespace
 - exit code: 1
@@ -805,6 +798,8 @@ git add sample.py
 git commit -m "Linting sample.py."
 Check Yaml.....................................................Passed
 Fix End of Files...............................................Passed
+Check for case conflicts.......................................Passed
+Check docstring is first.......................................Passed
 Trim Trailing Whitespace.......................................Passed
 black..........................................................Passed
 flake8..........................................................Passed
@@ -817,10 +812,12 @@ pytest.........................................................Passed
 
 ::: {.notes}
 Now we add the files and commit them and because we have `pre-commit` configured and installed it runs as a hook and the
-checks we configured are run against the files we are committing, in this case `sample.py`.
+checks we configured are run against the files we are committing, in this case `sample.py`. There is no downloading of
+the environments as there was with the first run and as we've corrected the linting errors the he tests pass and the
+commit is made.
 
-The tests pass and so the commit is made. The `[INFO]` line sometimes appears when you have unstaged changes that are
-not included in current commit.
+The `[INFO]` line here saying changes have been restored is because `pre-commit` makes a `git stash` and only runs the
+linting on the files that are included in the commit then restores that stash afterwards.
 
 This is much quicker and efficient than having to run `black`, `flake8`, `pylint` and `pytest` against the changed files
 manually, there is no cognitive overhead involved in thinking about what files to run against as there may be in larger
