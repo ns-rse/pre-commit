@@ -509,19 +509,19 @@ gitGraph
     commit
     commit
     checkout main
-    branch bug2
-    checkout bug2
+    branch feature1
+    checkout feature1
     commit
     commit
     checkout bug1
     commit
     checkout main
     merge bug1 tag: "v0.1.1"
-    checkout bug2
+    checkout feature1
     commit
     commit
     checkout main
-    merge bug2 tag: "v0.1.2"
+    merge feature1 tag: "v0.1.2"
     commit
 </pre>
 <div id="mermaid-tooltip-1" class="mermaidTooltip">
@@ -587,7 +587,7 @@ gitGraph
 <span id="cb1-2"><a href="#cb1-2"></a></span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb1-4"><a href="#cb1-4"></a></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">def</span> find_files(file_path: Union[<span class="bu">str</span>, Path], file_ext: <span class="bu">str</span>) <span class="op">-&gt;</span> List:</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">def</span> find_files(file_path: Union[<span class="bu">str</span>, Path], file_ext: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">list</span>:</span>
 <span id="cb1-6"><a href="#cb1-6"></a>    <span class="co">"""Recursively find files of the stated type along the given file path."""</span></span>
 <span id="cb1-7"><a href="#cb1-7"></a>    <span class="co"># We have a really long comment on this line just for demonstration purposes so that we can generate a few errors that need linting</span></span>
 <span id="cb1-8"><a href="#cb1-8"></a>    <span class="cf">try</span>:</span>
@@ -691,24 +691,22 @@ gitGraph
 <span id="cb5-3"><a href="#cb5-3"></a><span class="ex">sample.py:1:1:</span> F401 <span class="st">'numpy as np'</span> imported but unused</span>
 <span id="cb5-4"><a href="#cb5-4"></a><span class="ex">sample.py:2:1:</span> F401 <span class="st">'pandas as pd'</span> imported but unused</span>
 <span id="cb5-5"><a href="#cb5-5"></a><span class="ex">sample.py:7:36:</span> F821 undefined name <span class="st">'Union'</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="ex">sample.py:7:73:</span> F821 undefined name <span class="st">'List'</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="ex">sample.py:8:80:</span> E501 line too long <span class="er">(</span><span class="ex">87</span> <span class="op">&gt;</span> 79 characters<span class="kw">)</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="ex">sample.py:9:80:</span> E501 line too long <span class="er">(</span><span class="ex">135</span> <span class="op">&gt;</span> 79 characters<span class="kw">)</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="ex">sample.py:12:5:</span> E722 do not use bare <span class="st">'except'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="ex">sample.py:8:80:</span> E501 line too long <span class="er">(</span><span class="ex">87</span> <span class="op">&gt;</span> 79 characters<span class="kw">)</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="ex">sample.py:9:80:</span> E501 line too long <span class="er">(</span><span class="ex">135</span> <span class="op">&gt;</span> 79 characters<span class="kw">)</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="ex">sample.py:12:5:</span> E722 do not use bare <span class="st">'except'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>pylint</code></p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="ex">❱</span> pylint sample.py</span>
 <span id="cb6-2"><a href="#cb6-2"></a><span class="ex">*************</span> Module sample</span>
 <span id="cb6-3"><a href="#cb6-3"></a><span class="ex">sample.py:9:0:</span> C0301: Line too long <span class="er">(</span><span class="ex">135/120</span><span class="kw">)</span> <span class="kw">(</span><span class="ex">line-too-long</span><span class="kw">)</span></span>
 <span id="cb6-4"><a href="#cb6-4"></a><span class="ex">sample.py:1:0:</span> C0114: Missing module docstring <span class="er">(</span><span class="ex">missing-module-docstring</span><span class="kw">)</span></span>
 <span id="cb6-5"><a href="#cb6-5"></a><span class="ex">sample.py:7:35:</span> E0602: Undefined variable <span class="st">'Union'</span> <span class="er">(</span><span class="ex">undefined-variable</span><span class="kw">)</span></span>
-<span id="cb6-6"><a href="#cb6-6"></a><span class="ex">sample.py:7:72:</span> E0602: Undefined variable <span class="st">'List'</span> <span class="er">(</span><span class="ex">undefined-variable</span><span class="kw">)</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="ex">sample.py:12:4:</span> W0706: The except handler raises immediately <span class="er">(</span><span class="ex">try-except-raise</span><span class="kw">)</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="ex">sample.py:4:0:</span> C0411: standard import <span class="st">"from pathlib import Path"</span> should be placed before <span class="st">"import numpy as np"</span> <span class="er">(</span><span class="ex">wrong-import-order</span><span class="kw">)</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a><span class="ex">sample.py:1:0:</span> W0611: Unused numpy imported as np <span class="er">(</span><span class="ex">unused-import</span><span class="kw">)</span></span>
-<span id="cb6-10"><a href="#cb6-10"></a><span class="ex">sample.py:2:0:</span> W0611: Unused pandas imported as pd <span class="er">(</span><span class="ex">unused-import</span><span class="kw">)</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a></span>
-<span id="cb6-12"><a href="#cb6-12"></a><span class="ex">-------------------------------------</span></span>
-<span id="cb6-13"><a href="#cb6-13"></a><span class="ex">Your</span> code has been rated at <span class="at">-10.00</span>/10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="ex">sample.py:12:4:</span> W0706: The except handler raises immediately <span class="er">(</span><span class="ex">try-except-raise</span><span class="kw">)</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="ex">sample.py:4:0:</span> C0411: standard import <span class="st">"from pathlib import Path"</span> should be placed before <span class="st">"import numpy as np"</span> <span class="er">(</span><span class="ex">wrong-import-order</span><span class="kw">)</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="ex">sample.py:1:0:</span> W0611: Unused numpy imported as np <span class="er">(</span><span class="ex">unused-import</span><span class="kw">)</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="ex">sample.py:2:0:</span> W0611: Unused pandas imported as pd <span class="er">(</span><span class="ex">unused-import</span><span class="kw">)</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="ex">-------------------------------------</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="ex">Your</span> code has been rated at <span class="at">-10.00</span>/10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>pytest</code></p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="ex">❱</span> pylint test_sample.py</span>
 <span id="cb7-2"><a href="#cb7-2"></a><span class="ex">=================</span> test session starts =================</span>
@@ -911,7 +909,6 @@ gitGraph
 <span id="cb13-37"><a href="#cb13-37"></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> pytest</span></span>
 <span id="cb13-38"><a href="#cb13-38"></a><span class="at">        </span><span class="fu">entry</span><span class="kw">:</span><span class="at"> pytest --cov</span></span>
 <span id="cb13-39"><a href="#cb13-39"></a><span class="at">        language:system</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Some extra lines in here</p>
 <aside class="notes">
 <p>Once you’ve installed <code>pre-commit</code> you need to configure it.</p>
 <p>Configuration of pre-commit is via a YAML file called <code>.pre-commit-config.yaml</code> and this should reside in the root of a project that is under Git version control.</p>
@@ -944,7 +941,7 @@ gitGraph
 <span id="cb14-10"><a href="#cb14-10"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> check-yaml</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
 <p>This is the main pre-commit hooks repository configuration, it defines the repository from which a particular version of a virtual environment is downloaded and you specify a revision of this to use.</p>
-<p>A series of <code>hooks</code> are then defined, here the <code>trailing-whitespace</code> and <code>end-of-file-fixer</code> are enabled to run on files of type text. There are then checks for <code>docstring-first</code>, <code>case-conflict</code> and finally a <code>check-yaml</code> hook which makes sure any YAML files are correctly formatted.</p>
+<p>A series of <code>hooks</code> are then defined, each has an <code>id</code> and here the <code>trailing-whitespace</code> and <code>end-of-file-fixer</code> are enabled to run on files of type text. There are then checks for <code>docstring-first</code>, <code>case-conflict</code> and finally a <code>check-yaml</code> hook which makes sure any YAML files are correctly formatted.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -990,7 +987,7 @@ gitGraph
 <span id="cb16-5"><a href="#cb16-5"></a><span class="at">      </span><span class="fu">entry</span><span class="kw">:</span><span class="at"> pytest --cov</span></span>
 <span id="cb16-6"><a href="#cb16-6"></a><span class="at">      </span><span class="fu">language</span><span class="kw">:</span><span class="at"> system</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
-<p>Both the <code>pylint</code> and <code>pytest</code> hooks are configured differently, the <code>repo</code> here is local, which means that rather than downloading a virtual environment to run the hook its going to use your existing local environment. This is because the environments that are available online do not include the packages that need to be installed to lint and test the code and so instead <code>pre-commit</code> uses the <code>system</code> where it is being run, i.e.&nbsp;the virtual environment you have activated.</p>
+<p>Both the <code>pylint</code> and <code>pytest</code> hooks are configured differently, the <code>repo</code> here is local, which means that rather than downloading a virtual environment to run the hook its going to use your existing local environment. This is because the environments that are available online do not include the packages that need to be installed to lint and test <em>your</em> code and so instead <code>pre-commit</code> uses the <code>system</code> where it is being run, i.e.&nbsp;the virtual environment you have activated.</p>
 <p>For Python projects there are other options, for example you could include a hook to run the static type checker <code>mypy</code> against your code base, there is an existing hook for this, or if you weren’t using <code>pytest</code> you could configure <code>unittest</code> and its extension <code>nose</code> you could configure a local hook to run tests using those.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1010,7 +1007,8 @@ gitGraph
 <span id="cb17-2"><a href="#cb17-2"></a><span class="ex">❱</span> pre-commit <span class="at">--version</span></span>
 <span id="cb17-3"><a href="#cb17-3"></a><span class="ex">pre-commit</span> 2.20.0</span>
 <span id="cb17-4"><a href="#cb17-4"></a><span class="ex">❱</span> pre-commit install</span>
-<span id="cb17-5"><a href="#cb17-5"></a><span class="ex">pre-commit</span> installed at .git/hooks/pre-commit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-5"><a href="#cb17-5"></a><span class="ex">pre-commit</span> installed at .git/hooks/pre-commit</span>
+<span id="cb17-6"><a href="#cb17-6"></a><span class="ex">❱</span> pre-commit install-hooks    <span class="co"># Optional</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
 <p>Now that <code>pre-commit</code> is installed on your system and a configuration file has been added to your repository you can install the <code>pre-commit</code> hook in the repository.</p>
 <p>You add the configuration file to the repository, check that <code>pre-commit</code> is available using the <code>--version</code> flag and then install it. This writes a bash script to <code>.git/hook/pre-commit</code> that runs <code>pre-commit</code> whenever you make a git commit, whether that is at the command line or through your IDE.</p>
@@ -1090,47 +1088,45 @@ gitGraph
 <span id="cb18-36"><a href="#cb18-36"></a><span class="ex">sample.py:1:1:</span> F401 <span class="st">'numpy as np'</span> imported but unused</span>
 <span id="cb18-37"><a href="#cb18-37"></a><span class="ex">sample.py:2:1:</span> F401 <span class="st">'pandas as pd'</span> imported but unused</span>
 <span id="cb18-38"><a href="#cb18-38"></a><span class="ex">sample.py:7:36:</span> F821 undefined name <span class="st">'Union'</span></span>
-<span id="cb18-39"><a href="#cb18-39"></a><span class="ex">sample.py:7:73:</span> F821 undefined name <span class="st">'List'</span></span>
-<span id="cb18-40"><a href="#cb18-40"></a><span class="ex">sample.py:8:80:</span> E501 line too long <span class="er">(</span><span class="ex">87</span> <span class="op">&gt;</span> 79 characters<span class="kw">)</span></span>
-<span id="cb18-41"><a href="#cb18-41"></a><span class="ex">sample.py:9:80:</span> E501 line too long <span class="er">(</span><span class="ex">135</span> <span class="op">&gt;</span> 79 characters<span class="kw">)</span></span>
-<span id="cb18-42"><a href="#cb18-42"></a><span class="ex">sample.py:12:5:</span> E722 do not use bare <span class="st">'except'</span></span>
-<span id="cb18-43"><a href="#cb18-43"></a></span>
-<span id="cb18-44"><a href="#cb18-44"></a><span class="ex">pylint.........................................................Failed</span></span>
-<span id="cb18-45"><a href="#cb18-45"></a><span class="ex">-</span> hook id: pylint</span>
-<span id="cb18-46"><a href="#cb18-46"></a><span class="ex">-</span> exit code: 1</span>
-<span id="cb18-47"><a href="#cb18-47"></a></span>
-<span id="cb18-48"><a href="#cb18-48"></a><span class="ex">*************</span> Module python.sample</span>
-<span id="cb18-49"><a href="#cb18-49"></a><span class="ex">sample.py:9:0:</span> C0301: Line too long <span class="er">(</span><span class="ex">135/120</span><span class="kw">)</span> <span class="kw">(</span><span class="ex">line-too-long</span><span class="kw">)</span></span>
-<span id="cb18-50"><a href="#cb18-50"></a><span class="ex">sample.py:1:0:</span> C0114: Missing module docstring <span class="er">(</span><span class="ex">missing-module-docstring</span><span class="kw">)</span></span>
-<span id="cb18-51"><a href="#cb18-51"></a><span class="ex">sample.py:7:35:</span> E0602: Undefined variable <span class="st">'Union'</span> <span class="er">(</span><span class="ex">undefined-variable</span><span class="kw">)</span></span>
-<span id="cb18-52"><a href="#cb18-52"></a><span class="ex">sample.py:7:72:</span> E0602: Undefined variable <span class="st">'List'</span> <span class="er">(</span><span class="ex">undefined-variable</span><span class="kw">)</span></span>
-<span id="cb18-53"><a href="#cb18-53"></a><span class="ex">sample.py:12:4:</span> W0706: The except handler raises immediately <span class="er">(</span><span class="ex">try-except-raise</span><span class="kw">)</span></span>
-<span id="cb18-54"><a href="#cb18-54"></a><span class="ex">sample.py:4:0:</span> C0411: standard import <span class="st">"from pathlib import Path"</span> should be placed before <span class="st">"import numpy as np"</span> <span class="er">(</span><span class="ex">wrong-import-order</span><span class="kw">)</span></span>
-<span id="cb18-55"><a href="#cb18-55"></a><span class="ex">sample.py:1:0:</span> W0611: Unused numpy imported as np <span class="er">(</span><span class="ex">unused-import</span><span class="kw">)</span></span>
-<span id="cb18-56"><a href="#cb18-56"></a><span class="ex">sample.py:2:0:</span> W0611: Unused pandas imported as pd <span class="er">(</span><span class="ex">unused-import</span><span class="kw">)</span></span>
-<span id="cb18-57"><a href="#cb18-57"></a></span>
-<span id="cb18-58"><a href="#cb18-58"></a><span class="ex">-------------------------------------</span></span>
-<span id="cb18-59"><a href="#cb18-59"></a><span class="ex">Your</span> code has been rated at <span class="at">-10.00</span>/10</span>
-<span id="cb18-60"><a href="#cb18-60"></a></span>
-<span id="cb18-61"><a href="#cb18-61"></a><span class="ex">pytest.........................................................Failed</span></span>
-<span id="cb18-62"><a href="#cb18-62"></a><span class="ex">=================</span> test session starts =================</span>
-<span id="cb18-63"><a href="#cb18-63"></a><span class="ex">platform</span> linux <span class="at">--</span> Python 3.7.11, pytest-7.1.1, pluggy-1.0.0</span>
-<span id="cb18-64"><a href="#cb18-64"></a><span class="ex">rootdir:</span> /home/neil/work/projects/pre-commit/assets/python</span>
-<span id="cb18-65"><a href="#cb18-65"></a><span class="ex">plugins:</span> hydra-core-1.2.0, regtest-1.5.0, cov-3.0.0</span>
-<span id="cb18-66"><a href="#cb18-66"></a><span class="ex">collected</span> 0 items / 1 error</span>
-<span id="cb18-67"><a href="#cb18-67"></a></span>
-<span id="cb18-68"><a href="#cb18-68"></a><span class="ex">=======================</span> ERRORS ========================</span>
-<span id="cb18-69"><a href="#cb18-69"></a><span class="ex">___________</span> ERROR collecting test_sample.py ___________</span>
-<span id="cb18-70"><a href="#cb18-70"></a><span class="ex">test_sample.py:1:</span> in <span class="op">&lt;</span>module<span class="op">&gt;</span></span>
-<span id="cb18-71"><a href="#cb18-71"></a>    <span class="ex">from</span> .sample import find_files</span>
-<span id="cb18-72"><a href="#cb18-72"></a><span class="ex">sample.py:7:</span> in <span class="op">&lt;</span>module<span class="op">&gt;</span></span>
-<span id="cb18-73"><a href="#cb18-73"></a>    <span class="ex">def</span> find_and_load_files<span class="er">(</span><span class="ex">file_path:</span> Union[str, Path], file_type: str<span class="kw">)</span><span class="bu">:</span></span>
-<span id="cb18-74"><a href="#cb18-74"></a><span class="ex">E</span>   NameError: name <span class="st">'Union'</span> is not defined</span>
-<span id="cb18-75"><a href="#cb18-75"></a><span class="ex">================</span> short test summary info ===============</span>
-<span id="cb18-76"><a href="#cb18-76"></a><span class="ex">ERROR</span> test_sample.py <span class="at">-</span> NameError: name <span class="st">'Union'</span> is not defined</span>
-<span id="cb18-77"><a href="#cb18-77"></a><span class="ex">!!!!!!!!</span> Interrupted: 1 error during collection !!!!!!!!</span>
-<span id="cb18-78"><a href="#cb18-78"></a><span class="ex">===================</span> 1 error in 0.49s ===================</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><img data-src="assets/img/whos_to_blame.png" width="200"> <a href="https://rse.shef.ac.uk/blog/git-blame/">Who’s to Blame?</a></p>
+<span id="cb18-39"><a href="#cb18-39"></a><span class="ex">sample.py:8:80:</span> E501 line too long <span class="er">(</span><span class="ex">87</span> <span class="op">&gt;</span> 79 characters<span class="kw">)</span></span>
+<span id="cb18-40"><a href="#cb18-40"></a><span class="ex">sample.py:9:80:</span> E501 line too long <span class="er">(</span><span class="ex">135</span> <span class="op">&gt;</span> 79 characters<span class="kw">)</span></span>
+<span id="cb18-41"><a href="#cb18-41"></a><span class="ex">sample.py:12:5:</span> E722 do not use bare <span class="st">'except'</span></span>
+<span id="cb18-42"><a href="#cb18-42"></a></span>
+<span id="cb18-43"><a href="#cb18-43"></a><span class="ex">pylint.........................................................Failed</span></span>
+<span id="cb18-44"><a href="#cb18-44"></a><span class="ex">-</span> hook id: pylint</span>
+<span id="cb18-45"><a href="#cb18-45"></a><span class="ex">-</span> exit code: 1</span>
+<span id="cb18-46"><a href="#cb18-46"></a></span>
+<span id="cb18-47"><a href="#cb18-47"></a><span class="ex">*************</span> Module python.sample</span>
+<span id="cb18-48"><a href="#cb18-48"></a><span class="ex">sample.py:9:0:</span> C0301: Line too long <span class="er">(</span><span class="ex">135/120</span><span class="kw">)</span> <span class="kw">(</span><span class="ex">line-too-long</span><span class="kw">)</span></span>
+<span id="cb18-49"><a href="#cb18-49"></a><span class="ex">sample.py:1:0:</span> C0114: Missing module docstring <span class="er">(</span><span class="ex">missing-module-docstring</span><span class="kw">)</span></span>
+<span id="cb18-50"><a href="#cb18-50"></a><span class="ex">sample.py:7:35:</span> E0602: Undefined variable <span class="st">'Union'</span> <span class="er">(</span><span class="ex">undefined-variable</span><span class="kw">)</span></span>
+<span id="cb18-51"><a href="#cb18-51"></a><span class="ex">sample.py:12:4:</span> W0706: The except handler raises immediately <span class="er">(</span><span class="ex">try-except-raise</span><span class="kw">)</span></span>
+<span id="cb18-52"><a href="#cb18-52"></a><span class="ex">sample.py:4:0:</span> C0411: standard import <span class="st">"from pathlib import Path"</span> should be placed before <span class="st">"import numpy as np"</span> <span class="er">(</span><span class="ex">wrong-import-order</span><span class="kw">)</span></span>
+<span id="cb18-53"><a href="#cb18-53"></a><span class="ex">sample.py:1:0:</span> W0611: Unused numpy imported as np <span class="er">(</span><span class="ex">unused-import</span><span class="kw">)</span></span>
+<span id="cb18-54"><a href="#cb18-54"></a><span class="ex">sample.py:2:0:</span> W0611: Unused pandas imported as pd <span class="er">(</span><span class="ex">unused-import</span><span class="kw">)</span></span>
+<span id="cb18-55"><a href="#cb18-55"></a></span>
+<span id="cb18-56"><a href="#cb18-56"></a><span class="ex">-------------------------------------</span></span>
+<span id="cb18-57"><a href="#cb18-57"></a><span class="ex">Your</span> code has been rated at <span class="at">-10.00</span>/10</span>
+<span id="cb18-58"><a href="#cb18-58"></a></span>
+<span id="cb18-59"><a href="#cb18-59"></a><span class="ex">pytest.........................................................Failed</span></span>
+<span id="cb18-60"><a href="#cb18-60"></a><span class="ex">=================</span> test session starts =================</span>
+<span id="cb18-61"><a href="#cb18-61"></a><span class="ex">platform</span> linux <span class="at">--</span> Python 3.7.11, pytest-7.1.1, pluggy-1.0.0</span>
+<span id="cb18-62"><a href="#cb18-62"></a><span class="ex">rootdir:</span> /home/neil/work/projects/pre-commit/assets/python</span>
+<span id="cb18-63"><a href="#cb18-63"></a><span class="ex">plugins:</span> hydra-core-1.2.0, regtest-1.5.0, cov-3.0.0</span>
+<span id="cb18-64"><a href="#cb18-64"></a><span class="ex">collected</span> 0 items / 1 error</span>
+<span id="cb18-65"><a href="#cb18-65"></a></span>
+<span id="cb18-66"><a href="#cb18-66"></a><span class="ex">=======================</span> ERRORS ========================</span>
+<span id="cb18-67"><a href="#cb18-67"></a><span class="ex">___________</span> ERROR collecting test_sample.py ___________</span>
+<span id="cb18-68"><a href="#cb18-68"></a><span class="ex">test_sample.py:1:</span> in <span class="op">&lt;</span>module<span class="op">&gt;</span></span>
+<span id="cb18-69"><a href="#cb18-69"></a>    <span class="ex">from</span> .sample import find_files</span>
+<span id="cb18-70"><a href="#cb18-70"></a><span class="ex">sample.py:7:</span> in <span class="op">&lt;</span>module<span class="op">&gt;</span></span>
+<span id="cb18-71"><a href="#cb18-71"></a>    <span class="ex">def</span> find_and_load_files<span class="er">(</span><span class="ex">file_path:</span> Union[str, Path], file_type: str<span class="kw">)</span><span class="bu">:</span></span>
+<span id="cb18-72"><a href="#cb18-72"></a><span class="ex">E</span>   NameError: name <span class="st">'Union'</span> is not defined</span>
+<span id="cb18-73"><a href="#cb18-73"></a><span class="ex">================</span> short test summary info ===============</span>
+<span id="cb18-74"><a href="#cb18-74"></a><span class="ex">ERROR</span> test_sample.py <span class="at">-</span> NameError: name <span class="st">'Union'</span> is not defined</span>
+<span id="cb18-75"><a href="#cb18-75"></a><span class="ex">!!!!!!!!</span> Interrupted: 1 error during collection !!!!!!!!</span>
+<span id="cb18-76"><a href="#cb18-76"></a><span class="ex">===================</span> 1 error in 0.49s ===================</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>git --ignore-rev</code> <img data-src="assets/img/whos_to_blame.png" width="200"> <a href="https://rse.shef.ac.uk/blog/git-blame/">Who’s to Blame?</a></p>
 </section>
 <aside class="notes">
 <p>Normally <code>pre-commit</code> only runs against the files that have been changed in a given commit and so after installing it is often a good idea to run it against all files.</p>
@@ -1162,31 +1158,27 @@ gitGraph
 <span id="cb19-8"><a href="#cb19-8"></a>    <span class="cf">try</span>:</span>
 <span id="cb19-9"><a href="#cb19-9"></a>        <span class="cf">return</span> <span class="bu">list</span>(Path(file_path).rglob(<span class="ss">f"*</span><span class="sc">{</span>file_ext<span class="sc">}</span><span class="ss">"</span>))</span>
 <span id="cb19-10"><a href="#cb19-10"></a>    <span class="cf">except</span>:</span>
-<span id="cb19-11"><a href="#cb19-11"></a>        <span class="cf">raise</span></span>
-<span id="cb19-12"><a href="#cb19-12"></a>``<span class="op">**</span></span>
-<span id="cb19-13"><a href="#cb19-13"></a></span>
-<span id="cb19-14"><a href="#cb19-14"></a><span class="op">**</span>pylint errors<span class="op">**</span></span>
-<span id="cb19-15"><a href="#cb19-15"></a>```{.bash}</span>
-<span id="cb19-16"><a href="#cb19-16"></a><span class="op">*************</span> Module python.sample</span>
-<span id="cb19-17"><a href="#cb19-17"></a>sample.py:<span class="dv">9</span>:<span class="dv">0</span>: C0301: Line too <span class="bu">long</span> (<span class="dv">135</span><span class="op">/</span><span class="dv">120</span>) (line<span class="op">-</span>too<span class="op">-</span><span class="bu">long</span>)</span>
-<span id="cb19-18"><a href="#cb19-18"></a>sample.py:<span class="dv">1</span>:<span class="dv">0</span>: C0114: Missing module docstring (missing<span class="op">-</span>module<span class="op">-</span>docstring)</span>
-<span id="cb19-19"><a href="#cb19-19"></a>sample.py:<span class="dv">7</span>:<span class="dv">35</span>: E0602: Undefined variable <span class="st">'Union'</span> (undefined<span class="op">-</span>variable)</span>
-<span id="cb19-20"><a href="#cb19-20"></a>sample.py:<span class="dv">7</span>:<span class="dv">72</span>: E0602: Undefined variable <span class="st">'List'</span> (undefined<span class="op">-</span>variable)</span>
-<span id="cb19-21"><a href="#cb19-21"></a>sample.py:<span class="dv">12</span>:<span class="dv">4</span>: W0706: The <span class="cf">except</span> handler raises immediately (<span class="cf">try</span><span class="op">-</span><span class="cf">except</span><span class="op">-</span><span class="cf">raise</span>)</span>
-<span id="cb19-22"><a href="#cb19-22"></a>sample.py:<span class="dv">4</span>:<span class="dv">0</span>: C0411: standard <span class="im">import</span> <span class="st">"from pathlib import Path"</span> should be placed before <span class="st">"import numpy as np"</span> (wrong<span class="op">-</span><span class="im">import</span><span class="op">-</span>order)</span>
-<span id="cb19-23"><a href="#cb19-23"></a>sample.py:<span class="dv">1</span>:<span class="dv">0</span>: W0611: Unused numpy imported <span class="im">as</span> np (unused<span class="op">-</span><span class="im">import</span>)</span>
-<span id="cb19-24"><a href="#cb19-24"></a></span>
-<span id="cb19-25"><a href="#cb19-25"></a><span class="op">-------------------------------------</span></span>
-<span id="cb19-26"><a href="#cb19-26"></a>Your code has been rated at <span class="op">-</span><span class="fl">10.00</span><span class="op">/</span><span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-11"><a href="#cb19-11"></a>        <span class="cf">raise</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>pylint errors</strong></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1"></a><span class="ex">*************</span> Module python.sample</span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="ex">sample.py:9:0:</span> C0301: Line too long <span class="er">(</span><span class="ex">135/120</span><span class="kw">)</span> <span class="kw">(</span><span class="ex">line-too-long</span><span class="kw">)</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a><span class="ex">sample.py:1:0:</span> C0114: Missing module docstring <span class="er">(</span><span class="ex">missing-module-docstring</span><span class="kw">)</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a><span class="ex">sample.py:7:35:</span> E0602: Undefined variable <span class="st">'Union'</span> <span class="er">(</span><span class="ex">undefined-variable</span><span class="kw">)</span></span>
+<span id="cb20-5"><a href="#cb20-5"></a><span class="ex">sample.py:12:4:</span> W0706: The except handler raises immediately <span class="er">(</span><span class="ex">try-except-raise</span><span class="kw">)</span></span>
+<span id="cb20-6"><a href="#cb20-6"></a><span class="ex">sample.py:4:0:</span> C0411: standard import <span class="st">"from pathlib import Path"</span> should be placed before <span class="st">"import numpy as np"</span> <span class="er">(</span><span class="ex">wrong-import-order</span><span class="kw">)</span></span>
+<span id="cb20-7"><a href="#cb20-7"></a><span class="ex">sample.py:1:0:</span> W0611: Unused numpy imported as np <span class="er">(</span><span class="ex">unused-import</span><span class="kw">)</span></span>
+<span id="cb20-8"><a href="#cb20-8"></a></span>
+<span id="cb20-9"><a href="#cb20-9"></a><span class="ex">-------------------------------------</span></span>
+<span id="cb20-10"><a href="#cb20-10"></a><span class="ex">Your</span> code has been rated at <span class="at">-10.00</span>/10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Linted</strong></p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a><span class="co">"""Find files of a given type """</span></span>
-<span id="cb20-2"><a href="#cb20-2"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb20-3"><a href="#cb20-3"></a><span class="im">from</span> typing <span class="im">import</span> Union</span>
-<span id="cb20-4"><a href="#cb20-4"></a></span>
-<span id="cb20-5"><a href="#cb20-5"></a></span>
-<span id="cb20-6"><a href="#cb20-6"></a><span class="kw">def</span> find_files(file_path: Union[<span class="bu">str</span>, Path], file_type: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">list</span>:</span>
-<span id="cb20-7"><a href="#cb20-7"></a>    <span class="co">"""Recursively find files of the stated type along the given file path."""</span></span>
-<span id="cb20-8"><a href="#cb20-8"></a>    <span class="cf">return</span> <span class="bu">list</span>(Path(file_path).rglob(<span class="ss">f"*</span><span class="sc">{</span>file_type<span class="sc">}</span><span class="ss">"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a><span class="co">"""Find files of a given type """</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="im">from</span> typing <span class="im">import</span> Union</span>
+<span id="cb21-4"><a href="#cb21-4"></a></span>
+<span id="cb21-5"><a href="#cb21-5"></a></span>
+<span id="cb21-6"><a href="#cb21-6"></a><span class="kw">def</span> find_files(file_path: Union[<span class="bu">str</span>, Path], file_type: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">list</span>:</span>
+<span id="cb21-7"><a href="#cb21-7"></a>    <span class="co">"""Recursively find files of the stated type along the given file path."""</span></span>
+<span id="cb21-8"><a href="#cb21-8"></a>    <span class="cf">return</span> <span class="bu">list</span>(Path(file_path).rglob(<span class="ss">f"*</span><span class="sc">{</span>file_type<span class="sc">}</span><span class="ss">"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <aside class="notes">
 <p>Lets fix the linting errors. You can see the original code at the top and the linted code below where we’ve addressed the problems that<code>flake8</code> and <code>pylint</code> were reporting by removing unused libraries, importing the missing <code>Union</code> class, changing the returned to be a basic Python <code>list</code> rather than a class from the <code>typing</code> library.</p>
@@ -1204,22 +1196,22 @@ gitGraph
       }</style></aside>
 <section id="add-and-commit-changes" class="slide level2">
 <h2>Add and commit changes</h2>
-<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">git</span> add sample.py</span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Linting sample.py."</span></span>
-<span id="cb21-3"><a href="#cb21-3"></a><span class="ex">Check</span> Yaml.....................................................Passed</span>
-<span id="cb21-4"><a href="#cb21-4"></a><span class="ex">Fix</span> End of Files...............................................Passed</span>
-<span id="cb21-5"><a href="#cb21-5"></a><span class="ex">Check</span> for case conflicts.......................................Passed</span>
-<span id="cb21-6"><a href="#cb21-6"></a><span class="ex">Check</span> docstring is first.......................................Passed</span>
-<span id="cb21-7"><a href="#cb21-7"></a><span class="ex">Trim</span> Trailing Whitespace.......................................Passed</span>
-<span id="cb21-8"><a href="#cb21-8"></a><span class="ex">black..........................................................Passed</span></span>
-<span id="cb21-9"><a href="#cb21-9"></a><span class="ex">flake8..........................................................Passed</span></span>
-<span id="cb21-10"><a href="#cb21-10"></a><span class="ex">pylint.........................................................Passed</span></span>
-<span id="cb21-11"><a href="#cb21-11"></a><span class="ex">pytest.........................................................Passed</span></span>
-<span id="cb21-12"><a href="#cb21-12"></a><span class="ex">[INFO]</span> Restored changes from /home/neil/.cache/pre-commit/patch1674045267-394193.</span>
-<span id="cb21-13"><a href="#cb21-13"></a><span class="ex">[main</span> 05b1568] Linting sample.py</span>
-<span id="cb21-14"><a href="#cb21-14"></a> <span class="ex">1</span> file changed, 2 insertions<span class="er">(</span><span class="ex">+</span><span class="kw">)</span><span class="ex">,</span> 2 deletions<span class="er">(</span><span class="ex">-</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">git</span> add sample.py</span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Linting sample.py."</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a><span class="ex">Check</span> Yaml.....................................................Passed</span>
+<span id="cb22-4"><a href="#cb22-4"></a><span class="ex">Fix</span> End of Files...............................................Passed</span>
+<span id="cb22-5"><a href="#cb22-5"></a><span class="ex">Check</span> for case conflicts.......................................Passed</span>
+<span id="cb22-6"><a href="#cb22-6"></a><span class="ex">Check</span> docstring is first.......................................Passed</span>
+<span id="cb22-7"><a href="#cb22-7"></a><span class="ex">Trim</span> Trailing Whitespace.......................................Passed</span>
+<span id="cb22-8"><a href="#cb22-8"></a><span class="ex">black..........................................................Passed</span></span>
+<span id="cb22-9"><a href="#cb22-9"></a><span class="ex">flake8.........................................................Passed</span></span>
+<span id="cb22-10"><a href="#cb22-10"></a><span class="ex">pylint.........................................................Passed</span></span>
+<span id="cb22-11"><a href="#cb22-11"></a><span class="ex">pytest.........................................................Passed</span></span>
+<span id="cb22-12"><a href="#cb22-12"></a><span class="ex">[INFO]</span> Restored changes from /home/neil/.cache/pre-commit/patch1674045267-394193.</span>
+<span id="cb22-13"><a href="#cb22-13"></a><span class="ex">[main</span> 05b1568] Linting sample.py</span>
+<span id="cb22-14"><a href="#cb22-14"></a> <span class="ex">1</span> file changed, 2 insertions<span class="er">(</span><span class="ex">+</span><span class="kw">)</span><span class="ex">,</span> 2 deletions<span class="er">(</span><span class="ex">-</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
-<p>Now we add the files and commit them and because we have <code>pre-commit</code> configured and installed it runs as a hook and the checks we configured are run against <strong>only</strong> the files we are committing, in this case <code>sample.py</code>. There is no downloading of the environments as there was with the first manual run and as we’ve corrected the linting errors the tests pass and the commit is made.</p>
+<p>Now we <code>git add</code> the files and <code>git commit</code> them and because we have <code>pre-commit</code> configured and installed we don’t need to run the linting or tests manually as <code>pre-commit</code> runs the various hooks we’ve configured it to but <strong>only</strong> against the files we are committing, in this case <code>sample.py</code>. There is no downloading of the environments as there was with the first manual run and as we’ve corrected the linting errors the tests pass and the commit is made.</p>
 <p>The <code>[INFO]</code> line here is saying changes have been restored is because <code>pre-commit</code> makes a <code>git stash</code> and only runs the linting on the files that are included in the commit then restores that stash afterwards.</p>
 <p>This is much quicker and efficient than having to run <code>black</code>, <code>flake8</code>, <code>pylint</code> and <code>pytest</code> against the changed files manually, there is no cognitive overhead involved in thinking about what files to run against as there may be in larger changes. You might consider running linting and tests against the whole code base but this could be problematic if there are unlinted files and if its a large code base with lots of tests it might take a long time to run. With <code>pre-commit</code> the linting and tests run only against the files included in the commit and so are faster.</p>
 <p>This all streamlines the process and frees up developer time.</p>
@@ -1297,6 +1289,7 @@ gitGraph
 <li>Supports GitHub but more to come in the future.</li>
 <li>Zero configuration, just need <code>.pre-commit-config.yaml</code>.</li>
 <li>Corrects &amp; commits <strong>some</strong> formatting issues automatically without need for developer to reformat.</li>
+<li>Only runs on Pull Request commits (not on individual branches)</li>
 <li>Automatically updates <code>.pre-commit-config.yaml</code> for you (e.g.&nbsp;new <code>rev</code>).</li>
 <li>Free for open source repositories (paid for version for private/organisation repositories).</li>
 </ul>
@@ -1305,6 +1298,7 @@ gitGraph
 <p>Currently it only supports GitHub but apparently support is in development for other platforms such as GitLab and so forth.</p>
 <p>Its really easy to use, you don’t have to provide any specific configuration (although you can if you want to and I’ll get to that shortly).</p>
 <p>If the configured <code>pre-commit</code> hooks make simple formatting changes to your files <code>pre-commit.ci</code> will automatically fix the pull request.</p>
+<p>Only runs on Pull Request commits, so if you’re pushing your work to your branch you don’t need to worry it won’t be churning through every push.</p>
 <p>It will also automatically keep your <code>.pre-commit-config.yaml</code> up-to-date when new revisions of configured hooks become available.</p>
 <p>Its free for open source repositories, there are paid for options for private and organisation repositories.</p>
 <p>It really is worth using this over writing your own not just for the reasons described but it is also considerably faster because it caches the various environments that are used. If you wrote your own GitHub Action for this then on execution each runner would have to download all the hooks anew, setup and install any local environment and then run <code>pre-commit</code>. There is no such overhead with <code>pre-commit.ci</code> so if you can I would recommend using it.</p>
@@ -1322,13 +1316,13 @@ gitGraph
 </section>
 <section id="configuration-.pre-commit-config.yaml" class="slide level2">
 <h2>Configuration (<code>.pre-commit-config.yaml</code>)</h2>
-<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb22-1"><a href="#cb22-1"></a></span>
-<span id="cb22-2"><a href="#cb22-2"></a><span class="fu">ci</span><span class="kw">:</span></span>
-<span id="cb22-3"><a href="#cb22-3"></a><span class="at">  </span><span class="fu">autofix_prs</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb22-4"><a href="#cb22-4"></a><span class="at">  </span><span class="fu">autofix_commit_msg</span><span class="kw">:</span><span class="at"> </span><span class="st">'[pre-commit.ci] Fixing issues with pre-commit'</span></span>
-<span id="cb22-5"><a href="#cb22-5"></a><span class="at">  </span><span class="fu">autoupdate_schedule</span><span class="kw">:</span><span class="at"> weekly</span></span>
-<span id="cb22-6"><a href="#cb22-6"></a><span class="at">  </span><span class="fu">autoupdate_commit_msg</span><span class="kw">:</span><span class="at"> </span><span class="st">'[pre-commit.ci] pre-commit automatically updated.'</span></span>
-<span id="cb22-7"><a href="#cb22-7"></a><span class="at">  </span><span class="fu">skip</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">pylint</span><span class="kw">,</span><span class="at"> pytest</span><span class="kw">]</span><span class="co"> # Optionally list ids of hooks to skip on CI</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb23-1"><a href="#cb23-1"></a></span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="fu">ci</span><span class="kw">:</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a><span class="at">  </span><span class="fu">autofix_prs</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb23-4"><a href="#cb23-4"></a><span class="at">  </span><span class="fu">autofix_commit_msg</span><span class="kw">:</span><span class="at"> </span><span class="st">'[pre-commit.ci] Fixing issues with pre-commit'</span></span>
+<span id="cb23-5"><a href="#cb23-5"></a><span class="at">  </span><span class="fu">autoupdate_schedule</span><span class="kw">:</span><span class="at"> weekly</span></span>
+<span id="cb23-6"><a href="#cb23-6"></a><span class="at">  </span><span class="fu">autoupdate_commit_msg</span><span class="kw">:</span><span class="at"> </span><span class="st">'[pre-commit.ci] pre-commit automatically updated.'</span></span>
+<span id="cb23-7"><a href="#cb23-7"></a><span class="at">  </span><span class="fu">skip</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">pylint</span><span class="kw">,</span><span class="at"> pytest</span><span class="kw">]</span><span class="co"> # Optionally list ids of hooks to skip on CI</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <aside class="notes">
 <p>Its not required but you can if you want configure <code>pre-commit.ci</code> with a <code>ci:</code> section in your <code>.pre-commit-config.yaml</code>, this example shows some explicit options to automatically fix pull requests and the message to add when doing so.</p>
 <p>The update schedule is set to run <code>weekly</code> and as an example the <code>pylint</code> and <code>pytest</code> hooks are set to be skipped because if you remember these are configured to run in the local environments because of the dependency needs.</p>
@@ -1373,7 +1367,7 @@ gitGraph
 <aside class="notes">
 <p>You can provide <code>pre-commit.ci</code> access to all of your repositories or fine grained control to only specific repositories and I would advocate going with the fine-grained control so you know what is happening where and when.</p>
 <p>That is all you need to do. Now when you push to <code>master</code> or <code>main</code> or make pull requests <code>pre-commit.ci</code> will run.</p>
-<p>If you’re using GitLab there is a thread on StackOverflow linked here that shows how to setup and configure things..</p>
+<p>If you’re using GitLab there is a thread on StackOverflow linked here that shows how to setup and configure things.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -1527,8 +1521,15 @@ gitGraph
 </section>
 <section id="view-these-slides-1" class="slide level2">
 <h2>View these slides…</h2>
-
-<img data-src="assets/img/slides.png" class="r-stretch"><p><a href="https://ns-rse.github.io/pre-commit/#/title-slide"><strong>ns-rse.github.io/pre-commit/</strong></a></p>
+<div class=".columns">
+<div class="column" style="width:50%;">
+<p><img data-src="https://lorenzwalthert.github.io/precommit/reference/figures/pre-commit-meme.jpeg"> By <a href="https://twitter.com/dataandme/status/1255510799273132032">Mara Averick</a></p>
+</div>
+<div class="column" style="width:50%;">
+<p><img data-src="assets/img/slides.png"></p>
+<p><a href="https://ns-rse.github.io/pre-commit/#/title-slide"><strong>ns-rse.github.io/pre-commit/</strong></a></p>
+</div>
+</div>
 <aside class="notes">
 <p>Here’s the QR code again in case you missed it, these slides have lots of links in to the resources and tools I’ve talked about so please do take the time to check them out.</p>
 <p>Also they’re written in RevealJS so if you view them hit ‘s’ and you can see the speaker notes I wrote and probably failed abysmally to follow today!</p>
