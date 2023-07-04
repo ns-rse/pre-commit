@@ -102,19 +102,19 @@ gitGraph
     commit
     commit
     checkout main
-    branch bug2
-    checkout bug2
+    branch feature1
+    checkout feature1
     commit
     commit
     checkout bug1
     commit
     checkout main
     merge bug1 tag: "v0.1.1"
-    checkout bug2
+    checkout feature1
     commit
     commit
     checkout main
-    merge bug2 tag: "v0.1.2"
+    merge feature1 tag: "v0.1.2"
     commit
 ```
 
@@ -169,7 +169,7 @@ import numpy as np
 
 from pathlib import Path
 
-def find_files(file_path: Union[str, Path], file_ext: str) -> List:
+def find_files(file_path: Union[str, Path], file_ext: str) -> list:
     """Recursively find files of the stated type along the given file path."""
     # We have a really long comment on this line just for demonstration purposes so that we can generate a few errors that need linting
     try:
@@ -270,7 +270,6 @@ sample.py:1:1: D100 Missing docstring in public module
 sample.py:1:1: F401 'numpy as np' imported but unused
 sample.py:2:1: F401 'pandas as pd' imported but unused
 sample.py:7:36: F821 undefined name 'Union'
-sample.py:7:73: F821 undefined name 'List'
 sample.py:8:80: E501 line too long (87 > 79 characters)
 sample.py:9:80: E501 line too long (135 > 79 characters)
 sample.py:12:5: E722 do not use bare 'except'
@@ -284,7 +283,6 @@ sample.py:12:5: E722 do not use bare 'except'
 sample.py:9:0: C0301: Line too long (135/120) (line-too-long)
 sample.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 sample.py:7:35: E0602: Undefined variable 'Union' (undefined-variable)
-sample.py:7:72: E0602: Undefined variable 'List' (undefined-variable)
 sample.py:12:4: W0706: The except handler raises immediately (try-except-raise)
 sample.py:4:0: C0411: standard import "from pathlib import Path" should be placed before "import numpy as np" (wrong-import-order)
 sample.py:1:0: W0611: Unused numpy imported as np (unused-import)
@@ -513,7 +511,6 @@ repos:
         language:system
 ```
 
-Some extra lines in here
 
 ::: {.notes}
 Once you've installed `pre-commit` you need to configure it.
@@ -550,9 +547,9 @@ Lets take a look at how a `pre-commit` hook is configured.
 This is the main pre-commit hooks repository configuration, it defines the repository from which a particular version of
 a virtual environment is downloaded and you specify a revision of this to use.
 
-A series of `hooks` are then defined, here the `trailing-whitespace` and `end-of-file-fixer` are enabled to run on files
-of type text. There are then checks for `docstring-first`, `case-conflict` and finally a `check-yaml` hook which makes
-sure any YAML files are correctly formatted.
+A series of `hooks` are then defined, each has an `id` and here the `trailing-whitespace` and `end-of-file-fixer` are
+enabled to run on files of type text. There are then checks for `docstring-first`, `case-conflict` and finally a
+`check-yaml` hook which makes sure any YAML files are correctly formatted.
 :::
 
 ## Hook configuration - Black
@@ -590,7 +587,7 @@ your Python package if you are using `setuptools`/
 ::: {.notes}
 Both the `pylint` and `pytest` hooks are configured differently, the `repo` here is local, which means that rather than
 downloading a virtual environment to run the hook its going to use your existing local environment. This is because the
-environments that are available online do not include the packages that need to be installed to lint and test the code
+environments that are available online do not include the packages that need to be installed to lint and test _your_ code
 and so instead `pre-commit` uses the `system` where it is being run, i.e. the virtual environment you have activated.
 
 For Python projects there are other options, for example you could include a hook to run the static type checker `mypy`
@@ -607,6 +604,7 @@ against your code base, there is an existing hook for this, or if you weren't us
 pre-commit 2.20.0
 ❱ pre-commit install
 pre-commit installed at .git/hooks/pre-commit
+❱ pre-commit install-hooks    # Optional
 ```
 ::: {.notes}
 Now that `pre-commit` is installed on your system and a configuration file has been added to your repository you can
@@ -691,7 +689,6 @@ sample.py:1:1: D100 Missing docstring in public module
 sample.py:1:1: F401 'numpy as np' imported but unused
 sample.py:2:1: F401 'pandas as pd' imported but unused
 sample.py:7:36: F821 undefined name 'Union'
-sample.py:7:73: F821 undefined name 'List'
 sample.py:8:80: E501 line too long (87 > 79 characters)
 sample.py:9:80: E501 line too long (135 > 79 characters)
 sample.py:12:5: E722 do not use bare 'except'
@@ -704,7 +701,6 @@ pylint.........................................................Failed
 sample.py:9:0: C0301: Line too long (135/120) (line-too-long)
 sample.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 sample.py:7:35: E0602: Undefined variable 'Union' (undefined-variable)
-sample.py:7:72: E0602: Undefined variable 'List' (undefined-variable)
 sample.py:12:4: W0706: The except handler raises immediately (try-except-raise)
 sample.py:4:0: C0411: standard import "from pathlib import Path" should be placed before "import numpy as np" (wrong-import-order)
 sample.py:1:0: W0611: Unused numpy imported as np (unused-import)
@@ -734,7 +730,7 @@ ERROR test_sample.py - NameError: name 'Union' is not defined
 ```
 
 
-![](assets/img/whos_to_blame.png){width=200}
+`git --ignore-rev` ![](assets/img/whos_to_blame.png){width=200}
 [Who's to Blame?](https://rse.shef.ac.uk/blog/git-blame/)
 
 ::::
@@ -776,7 +772,7 @@ def find_files(file_path: Union[str, Path], file_ext: str) -> List:
         return list(Path(file_path).rglob(f"*{file_ext}"))
     except:
         raise
-``**
+```
 
 **pylint errors**
 ```{.bash}
@@ -784,7 +780,6 @@ def find_files(file_path: Union[str, Path], file_ext: str) -> List:
 sample.py:9:0: C0301: Line too long (135/120) (line-too-long)
 sample.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 sample.py:7:35: E0602: Undefined variable 'Union' (undefined-variable)
-sample.py:7:72: E0602: Undefined variable 'List' (undefined-variable)
 sample.py:12:4: W0706: The except handler raises immediately (try-except-raise)
 sample.py:4:0: C0411: standard import "from pathlib import Path" should be placed before "import numpy as np" (wrong-import-order)
 sample.py:1:0: W0611: Unused numpy imported as np (unused-import)
@@ -830,7 +825,7 @@ Check for case conflicts.......................................Passed
 Check docstring is first.......................................Passed
 Trim Trailing Whitespace.......................................Passed
 black..........................................................Passed
-flake8..........................................................Passed
+flake8.........................................................Passed
 pylint.........................................................Passed
 pytest.........................................................Passed
 [INFO] Restored changes from /home/neil/.cache/pre-commit/patch1674045267-394193.
@@ -839,10 +834,10 @@ pytest.........................................................Passed
 ```
 
 ::: {.notes}
-Now we add the files and commit them and because we have `pre-commit` configured and installed it runs as a hook and the
-checks we configured are run against **only** the files we are committing, in this case `sample.py`. There is no
-downloading of the environments as there was with the first manual run and as we've corrected the linting errors the tests
-pass and the commit is made.
+Now we `git add` the files and `git commit` them and because we have `pre-commit` configured and installed we don't need
+to run the linting or tests manually as `pre-commit` runs the various hooks we've configured it to but **only** against
+the files we are committing, in this case `sample.py`. There is no downloading of the environments as there was with the
+first manual run and as we've corrected the linting errors the tests pass and the commit is made.
 
 The `[INFO]` line here is saying changes have been restored is because `pre-commit` makes a `git stash` and only runs
 the linting on the files that are included in the commit then restores that stash afterwards.
@@ -912,6 +907,7 @@ service to use in the form of `pre-commit.ci` which is a CI extension to `pre-co
 * Supports GitHub but more to come in the future.
 * Zero configuration, just need `.pre-commit-config.yaml`.
 * Corrects & commits **some** formatting issues automatically without need for developer to reformat.
+* Only runs on Pull Request commits (not on individual branches)
 * Automatically updates `.pre-commit-config.yaml` for you (e.g. new `rev`).
 * Free for open source repositories (paid for version for private/organisation repositories).
 
@@ -926,6 +922,9 @@ get to that shortly).
 
 If the configured `pre-commit` hooks make simple formatting changes to your files `pre-commit.ci` will automatically fix
 the pull request.
+
+Only runs on Pull Request commits, so if you're pushing your work to your branch you don't need to worry it won't be
+churning through every push.
 
 It will also automatically keep your `.pre-commit-config.yaml` up-to-date when new revisions of configured hooks become
 available.
@@ -985,7 +984,7 @@ and I would advocate going with the fine-grained control so you know what is hap
 
 That is all you need to do. Now when you push to `master` or `main` or make pull requests `pre-commit.ci` will run.
 
-If you're using GitLab there is a thread on StackOverflow linked here that shows how to setup and configure things..
+If you're using GitLab there is a thread on StackOverflow linked here that shows how to setup and configure things.
 :::
 
 
@@ -1108,9 +1107,21 @@ writing code allowing you to focus on the problem you are trying to solve.
 
 ## View these slides...
 
+:::: .columns
+
+::: {.column width="50%"}
+![](https://lorenzwalthert.github.io/precommit/reference/figures/pre-commit-meme.jpeg)
+By [Mara Averick](https://twitter.com/dataandme/status/1255510799273132032)
+:::
+
+::: {.column width="50%"}
+
 ![](assets/img/slides.png)
 
 [**ns-rse.github.io/pre-commit/**](https://ns-rse.github.io/pre-commit/#/title-slide)
+
+:::
+::::
 
 ::: {.notes}
 Here's the QR code again in case you missed it, these slides have lots of links in to the resources and tools I've
