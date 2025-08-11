@@ -1,4 +1,4 @@
-"""Find files of a given type """
+"""Find files of a given type"""
 
 from pathlib import Path
 from typing import Union
